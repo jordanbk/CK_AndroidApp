@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/drawable/button2.xml" value="0.184" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/drawable/edit_home_page.xml" value="0.184" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/drawable/edit_middle.xml" value="0.184" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/drawable/edit_sign_up.xml" value="0.184" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/activity_home.xml" value="0.18" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/activity_main.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/activity_sign_up.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/activity_term.xml" value="0.22" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/term_list_item.xml" value="0.17552083333333332" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
