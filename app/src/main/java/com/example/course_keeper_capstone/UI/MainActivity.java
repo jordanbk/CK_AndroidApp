@@ -20,7 +20,7 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    EditText editEmail, editPassword;
+    EditText editUsername, editPassword;
     Button buttonLogin;
     TextView textViewSignUp;
     Repository repo;
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Repository repo = new Repository(getApplication());
-        editEmail = findViewById(R.id.editEmail);
+        editUsername = findViewById(R.id.editEmail);
         editPassword = findViewById(R.id.editPassword);
         textViewSignUp = findViewById(R.id.textRegister);
         buttonLogin = findViewById(R.id.buttonLogin);
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = editEmail.getText().toString().trim();
+                String username = editUsername.getText().toString().trim();
                 String password = editPassword.getText().toString().trim();
                 List<User> user = repo.getAllUsers();
                 for(User u : repo.getAllUsers()) {

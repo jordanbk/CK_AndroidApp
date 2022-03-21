@@ -50,13 +50,13 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Repository repository = new Repository(getApplication());
 
-                String username = editTextUsername.getText().toString().trim();
                 String email = editTextEmail.getText().toString().trim();
+                String username = editTextUsername.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
                 String confirmPw = editTextCnfPassword.getText().toString().trim();
 
                 if (password.equals(confirmPw)) {
-                    User user = new User(id++, username, email, password);
+                    User user = new User(id++, email, username, password);
                     repository.insert(user);
                     Intent loginPage = new Intent(SignUpActivity.this, MainActivity.class);
                     startActivity(loginPage);
