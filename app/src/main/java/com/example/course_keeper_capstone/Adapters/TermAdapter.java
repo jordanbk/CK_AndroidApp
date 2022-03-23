@@ -16,15 +16,22 @@ import com.example.course_keeper_capstone.UI.Terms.TermDetailActivity;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder>{
 
 
     class TermViewHolder extends RecyclerView.ViewHolder {
-
-        private final TextView termItemView;
+        @BindView(R.id.card_term_title)
+        TextView tvTitle;
+        @BindView(R.id.card_term_dates)
+        TextView tvDates;
+        //private final TextView termItemView;
         public TermViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.termItemView = itemView.findViewById(R.id.textView2);
+            //this.termItemView = itemView.findViewById(R.id.card_term_title);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(new View.OnClickListener(){
 
                 @Override
@@ -32,10 +39,11 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
                     int position = getAdapterPosition();
                     final Term current = mTerms.get(position);
                     Intent intent = new Intent(context, TermDetailActivity.class);
-                    intent.putExtra("id", current.getTermID());
-                    intent.putExtra("name", current.getTermName());
-                    intent.putExtra("termEnd", current.getTermEnd());
                     intent.putExtra("termID", current.getTermID());
+                    intent.putExtra("name", current.getTermName());
+                    intent.putExtra("start", current.getTermStart());
+                    intent.putExtra("end", current.getTermEnd());
+                    intent.putExtra("userID", current.getUserID());
                     intent.putExtra("position", position);
                     context.startActivity(intent);
                 }
@@ -55,20 +63,17 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
     @NonNull
     @Override
     public TermAdapter.TermViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflator.inflate(R.layout.term_list_item,parent,false);
+        View itemView = mInflator.inflate(R.layout.card_layout_terms,parent,false);
         return new TermViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TermAdapter.TermViewHolder holder, int position) {
-        if(mTerms!=null){
             Term current = mTerms.get(position);
-            String name = current.getTermName();
-            holder.termItemView.setText(name);
-        }
-        else{
-            holder.termItemView.setText("No term name");
-        }
+            holder.tvTitle.setText(current.getTermName());
+            String startEnd = current.getTermStart() + " to " + current.getTermEnd();
+            holder.tvDates.setText(startEnd);
+
     }
 
     public void setTerms(List<Term> terms){

@@ -14,12 +14,15 @@ public class Term {
     private String termStart;
     @ColumnInfo(name = "termEnd")
     private String termEnd;
+    @ColumnInfo(name = "userID")
+    private int userID;
 
-    public Term(int termID, String termName, String termStart, String termEnd) {
+    public Term(int termID, String termName, String termStart, String termEnd, int userID) {
         this.termID = termID;
         this.termName = termName;
         this.termStart = termStart;
         this.termEnd = termEnd;
+        this.userID = userID;
     }
 
     public Term() {
@@ -41,6 +44,11 @@ public class Term {
     public String getTermEnd() {
         return termEnd;
     }
+
+    public int getUserID() {
+        return userID;
+    }
+
     //Setters
     public void setTermID(int termID) {
         this.termID = termID;
@@ -58,13 +66,18 @@ public class Term {
         this.termEnd = termEnd;
     }
 
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
     @Override
     public String toString() {
         return "Term{" +
                 "termID=" + termID +
                 ", termName='" + termName + '\'' +
-                ", termStart=" + termStart +
-                ", termEnd=" + termEnd +
+                ", termStart='" + termStart + '\'' +
+                ", termEnd='" + termEnd + '\'' +
+                ", userID=" + userID +
                 '}';
     }
 }

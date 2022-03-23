@@ -23,7 +23,7 @@ import com.example.course_keeper_capstone.Entity.User;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class, Term.class, Course.class, Assessment.class, Instructor.class}, version = 3)
+@Database(entities = {User.class, Term.class, Course.class, Assessment.class, Instructor.class}, version = 9)
 public abstract class DatabaseBuilder extends RoomDatabase {
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor =

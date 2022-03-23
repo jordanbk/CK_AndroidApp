@@ -25,8 +25,10 @@ public class MainActivity extends AppCompatActivity {
     TextView textViewSignUp;
     Repository repo;
     DatabaseBuilder database;
-    String username;
     UserDAO db;
+    int id;
+    int userID;
+    public static String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         editPassword = findViewById(R.id.editPassword);
         textViewSignUp = findViewById(R.id.textRegister);
         buttonLogin = findViewById(R.id.buttonLogin);
+
+        userID = getIntent().getIntExtra("id", -1);
 
 
         textViewSignUp.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
                 for(User u : repo.getAllUsers()) {
                     if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    intent.putExtra("username", username);
+                    username = intent.getStringExtra("username");
+                    //intent.putExtra("username", username);
                     startActivity(intent);
                     finish();
                     }

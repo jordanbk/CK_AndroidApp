@@ -38,8 +38,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             super(itemView);
             //this.userItemView = itemView.findViewById();
             itemView.setOnClickListener(new View.OnClickListener() {
-                ;
-
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();

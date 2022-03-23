@@ -7,11 +7,24 @@
         <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/drawable/edit_home_page.xml" value="0.184" />
         <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/drawable/edit_middle.xml" value="0.184" />
         <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/drawable/edit_sign_up.xml" value="0.184" />
-        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/activity_home.xml" value="0.18" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/drawable/edit_top.xml" value="0.1795" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/activity_add_term.xml" value="0.15729166666666666" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/activity_content_term.xml" value="0.1546875" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/activity_main.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/activity_sign_up.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/activity_term.xml" value="0.22" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/activity_term_detail.xml" value="0.2046875" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/app_bar_main.xml" value="0.1" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/card_layout.xml" value="1.0125" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/card_layout_terms.xml" value="0.21" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/content_add_term.xml" value="0.2" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/content_home.xml" value="0.33" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/content_term.xml" value="0.25" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/content_term_detail.xml" value="0.33" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/nav_header_main.xml" value="0.22" />
         <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/layout/term_list_item.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/menu/main.xml" value="0.15416666666666667" />
         <entry key="..\:/Users/Jburk/AndroidStudioProjects/Course_Keeper_Capstone/app/src/main/res/menu/navigation_menu.xml" value="0.196875" />
       </map>
     </option>

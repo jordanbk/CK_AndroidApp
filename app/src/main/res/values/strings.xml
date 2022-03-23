@@ -3,4 +3,10 @@
     <string name="text_view">Text View</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+    <string name="username_menu">Username</string>
+    <string name="save_term_btn">Save Term</string>
+    <string name="term_name_add_term">Term Name</string>
+    <string name="term_start_add_term">Term Start</string>
+    <string name="term_end_add_term">Term End</string>
+    <string name="add_course">Add Course</string>
 </resources>

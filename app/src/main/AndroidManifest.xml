@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+            android:name=".UI.Courses.CourseDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.Courses.CourseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.Terms.AddTermActivity"
+            android:exported="false" />
+        <activity
             android:name=".UI.Terms.TermDetailActivity"
             android:exported="false" />
         <activity
