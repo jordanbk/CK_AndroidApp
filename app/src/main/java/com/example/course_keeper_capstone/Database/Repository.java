@@ -28,6 +28,8 @@ public class Repository {
     private List<Course> mAllCourses;
     private List<Assessment> mAllAssessments;
     private List<Instructor> mAllInstructors;
+    private List<Term> mAllUserTerms;
+    private DatabaseBuilder mDB;
 
     private static int NUMBER_OF_THREADS=4;
     static final ExecutorService databaseExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
@@ -48,6 +50,7 @@ public class Repository {
         }
     }
 
+
     public boolean isValidAccount(String username, final String password)
     {
 
@@ -55,9 +58,12 @@ public class Repository {
         return userAccount.getPassword().equals(password);
     }
 
-/*    public User getUser(){
-        databaseExecutor.execute(()->{
-            mUser = mUserDAO.getUser(String email, String password);
+        // See below: I am trying to get a list of Terms based on the User ID
+        // see TermDAO for associated sql query
+
+    public List<Term> getUserTerms(int id){
+        databaseExecutor.execute(()-> {
+            mAllUserTerms = mTermDAO.getUserTerms(id);
         });
 
         try {
@@ -65,8 +71,8 @@ public class Repository {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return mUser;
-    }*/
+        return mAllUserTerms;
+    }
 
     public List<User> getAllUsers(){
         databaseExecutor.execute(()->{

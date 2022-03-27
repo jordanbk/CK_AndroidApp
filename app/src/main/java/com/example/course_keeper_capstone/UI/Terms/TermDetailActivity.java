@@ -17,6 +17,7 @@ import com.example.course_keeper_capstone.Database.Repository;
 import com.example.course_keeper_capstone.Entity.Course;
 import com.example.course_keeper_capstone.Entity.Term;
 import com.example.course_keeper_capstone.R;
+import com.example.course_keeper_capstone.UI.Courses.AddCourseActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -212,6 +213,13 @@ public class TermDetailActivity extends AppCompatActivity {
         repo.update(term);
         Toast.makeText(getApplicationContext(), "Term updated!", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(TermDetailActivity.this,TermActivity.class);
+        intent.putExtra("termID", termID);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.fab_add_course)
+    public void addCourse(){
+        Intent intent = new Intent(TermDetailActivity.this, AddCourseActivity.class);
         intent.putExtra("termID", termID);
         startActivity(intent);
     }

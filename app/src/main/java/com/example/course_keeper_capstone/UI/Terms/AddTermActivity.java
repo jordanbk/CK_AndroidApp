@@ -34,7 +34,7 @@ public class AddTermActivity extends AppCompatActivity {
 
     int userID;
 
-    private Repository Repo;
+    private Repository repo;
 
     int termId;
     String termName;
@@ -44,6 +44,8 @@ public class AddTermActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_term);
+
+        repo = new Repository(getApplication());
 
         userID = getIntent().getIntExtra("id", -1);
         termNameEdt = findViewById(R.id.term_name_edit);
@@ -131,12 +133,11 @@ public class AddTermActivity extends AppCompatActivity {
                             termEndEdt.getText().toString());
                 }*/
                 else {
-/*                    List<Term> allTerms = Repo.getAllTerms();
-                    termId = allTerms.get(allTerms.size() - 1).getTermID();*/
+
                     term = new Term(++termId, termNameEdt.getText().toString(), termStartEdt.getText().toString(),
                             termEndEdt.getText().toString(), userID);
                 }
-                Repo.insert(term);
+                repo.insert(term);
 
                 Intent intent = new Intent(AddTermActivity.this, TermActivity.class);
                 startActivity(intent);

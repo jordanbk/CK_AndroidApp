@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         textViewSignUp = findViewById(R.id.textRegister);
         buttonLogin = findViewById(R.id.buttonLogin);
 
-        userID = getIntent().getIntExtra("id", -1);
+        //userID = getIntent().getIntExtra("id", -1);
 
 
         textViewSignUp.setOnClickListener(new View.OnClickListener() {
@@ -59,8 +59,11 @@ public class MainActivity extends AppCompatActivity {
                 for(User u : repo.getAllUsers()) {
                     if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    username = intent.getStringExtra("username");
-                    //intent.putExtra("username", username);
+                    //username = intent.getStringExtra("username");
+                        userID = u.getId();
+                    intent.putExtra("username", username);
+                    intent.putExtra("id", userID);
+
                     startActivity(intent);
                     finish();
                     }

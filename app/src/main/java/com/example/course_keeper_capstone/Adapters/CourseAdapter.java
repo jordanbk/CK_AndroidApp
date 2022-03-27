@@ -11,22 +11,30 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.course_keeper_capstone.Entity.Course;
+import com.example.course_keeper_capstone.Entity.Term;
 import com.example.course_keeper_capstone.R;
 import com.example.course_keeper_capstone.UI.Courses.CourseDetailActivity;
 import com.example.course_keeper_capstone.UI.Terms.TermDetailActivity;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
 
 
     class CourseViewHolder extends RecyclerView.ViewHolder{
-
-        private final TextView courseItemView;
+        @BindView(R.id.card_term_title)
+        TextView tvTitle;
+        @BindView(R.id.card_term_dates)
+        TextView tvDates;
+        //private final TextView courseItemView;
 
         public CourseViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.courseItemView = itemView.findViewById(R.id.textView2);
+            ButterKnife.bind(this, itemView);
+            //this.courseItemView = itemView.findViewById(R.id.textView2);
             itemView.setOnClickListener(new View.OnClickListener(){
 
                 @Override
@@ -58,18 +66,16 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     @NonNull
     @Override
     public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflator.inflate(R.layout.term_list_item,parent,false);
+        View itemView = mInflator.inflate(R.layout.card_layout_courses,parent,false);
         return new CourseViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
-        if(mCourses != null) {
-            final Course current = mCourses.get(position);
-            holder.courseItemView.setText(current.getCourseTitle());
-        } else {
-            holder.courseItemView.setText("No Course name");
-        }
+        Course current = mCourses.get(position);
+        holder.tvTitle.setText(current.getCourseTitle());
+        String startEnd = current.getCourseStart() + " to " + current.getCourseEnd();
+        holder.tvDates.setText(startEnd);
     }
 
     @Override

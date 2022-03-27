@@ -36,21 +36,14 @@ public class TermActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         repository = new Repository(getApplication());
-        repository.getAllTerms();
-        //RecyclerView recyclerView = findViewById(R.id.recycler_view_terms);
-        RecyclerView recyclerViewTerms = findViewById(R.id.recycler_view_terms);
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_view_terms);
+        //RecyclerView recyclerViewTerms = findViewById(R.id.recycler_view_terms);
 
         userID = getIntent().getIntExtra("id", -1);
+        //repository.getUserTerms(userID);
 
-        // populate recycler view with term data
-        final TermAdapter adapter = new TermAdapter(this);
-        recyclerViewTerms.setAdapter(adapter);
-        recyclerViewTerms.setLayoutManager(new LinearLayoutManager(this));
-        adapter.setTerms(repository.getAllTerms());
-    }
-
-/*        Repository repository = new Repository(getApplication());
-        RecyclerView recyclerViewTerms = findViewById(R.id.recycler_view_terms);
+/*        RecyclerView recyclerViewTerms = findViewById(R.id.recycler_view_terms);
         final TermAdapter adapter = new TermAdapter(this);
         recyclerViewTerms.setAdapter(adapter);
         recyclerViewTerms.setLayoutManager(new LinearLayoutManager(this));
@@ -60,9 +53,19 @@ public class TermActivity extends AppCompatActivity {
                 associatedTerms.add(t);
             }
         }
-        adapter.setTerms(associatedTerms);
+        adapter.setTerms(associatedTerms);*/
 
-    }*/
+
+        // populate recycler view with term data
+
+       final TermAdapter adapter = new TermAdapter(this);
+        recyclerViewTerms.setAdapter(adapter);
+        recyclerViewTerms.setLayoutManager(new LinearLayoutManager(this));
+        adapter.setTerms(repository.getUserTerms(userID));
+    }
+
+
+
 
 
     /**

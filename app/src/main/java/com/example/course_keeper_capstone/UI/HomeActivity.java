@@ -46,7 +46,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //userID = getIntent().getIntExtra("id", -1);
+        userID = getIntent().getIntExtra("id", -1);
         repo = new Repository(getApplication());
 
 /*        List<User> getAllUsers = repo.getAllUsers();
@@ -81,8 +81,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Term termT = new Term(1, "name", null, null, 1);
-        repo.insert(termT);
+/*        Term termT = new Term(1, "name", null, null, 1);
+        repo.insert(termT);*/
         ButterKnife.bind(this);
 
 

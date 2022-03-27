@@ -11,7 +11,6 @@ import java.io.Serializable;
 public class User {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "Id")
     private int id;
 
     @ColumnInfo(name = "email")
