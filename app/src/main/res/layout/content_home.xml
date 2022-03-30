@@ -24,9 +24,7 @@
             android:id="@+id/button_terms"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_gravity="bottom"
-            android:background="@color/transparent"
-            android:contentDescription="View Terms" />
+            android:background="@color/transparent" />
 
         <LinearLayout
             android:background="@color/white"

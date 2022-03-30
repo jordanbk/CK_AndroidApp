@@ -9,4 +9,5 @@
     <string name="term_start_add_term">Term Start</string>
     <string name="term_end_add_term">Term End</string>
     <string name="add_course">Add Course</string>
+    <string name="search">search</string>
 </resources>

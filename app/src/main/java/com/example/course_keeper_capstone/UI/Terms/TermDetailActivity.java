@@ -7,10 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.course_keeper_capstone.Adapters.CourseAdapter;
 import com.example.course_keeper_capstone.Database.Repository;
@@ -83,6 +86,8 @@ public class TermDetailActivity extends AppCompatActivity {
             updateStart.setText(termStart);
             updateEnd.setText(termEnd);
         }
+
+
 
         // initialize calendar object for start date
         termStartDate = new DatePickerDialog.OnDateSetListener() {
@@ -165,6 +170,35 @@ public class TermDetailActivity extends AppCompatActivity {
         courseAdapter.setCourses(associateCourses);
         numCourses = associateCourses.size();
 
+        // setup toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.term_app_bar);
+        toolbar.setTitle("Terms");
+        // Inflate a menu to be displayed in the toolbar
+        toolbar.inflateMenu(R.menu.term_menu);
+        // Set an OnMenuItemClickListener to handle menu item clicks
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.delete_term:
+                        if (numCourses == 0) {
+                            Term term = new Term(termID, updateName.getText().toString(),
+                                    updateStart.getText().toString(),updateEnd.getText().toString(), userID);
+                            repo.delete(term);
+                            Intent intent = new Intent(TermDetailActivity.this, TermActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), "Cannot delete terms with associated courses", Toast.LENGTH_LONG).show();
+                        }
+                        return true;
+                    default:
+                        //default intent
+                        return true;
+                }
+            }
+        });
+
     }
 
     /**
@@ -223,5 +257,12 @@ public class TermDetailActivity extends AppCompatActivity {
         intent.putExtra("termID", termID);
         startActivity(intent);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.term_menu, menu);
+        return true;
+    }
+
 
 }

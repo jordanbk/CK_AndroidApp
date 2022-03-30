@@ -21,12 +21,14 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/card_term_title"
                 android:text="TITLE"
+                android:layout_marginStart="10dp"
                 android:textSize="30sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DATES"
+                android:layout_marginStart="10dp"
                 android:id="@+id/card_term_dates" />
         </LinearLayout>
 

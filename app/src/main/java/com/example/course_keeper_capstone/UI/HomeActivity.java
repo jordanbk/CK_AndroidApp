@@ -10,6 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -39,8 +44,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar = null;
     Repository repo;
     int userID;
-
+    protected FrameLayout frameLayout;
     User currentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,17 +54,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         userID = getIntent().getIntExtra("id", -1);
         repo = new Repository(getApplication());
-
-/*        List<User> getAllUsers = repo.getAllUsers();
-        for(User user : getAllUsers){
-            if (user.getId() == userID){
-                currentUser = user;
-                userID = currentUser.getId();
-                usernameText = currentUser.getUsername();
-            }
-        }*/
-
-        //tvUser.setText(usernameText);
 
 
         // Inflate a menu to be displayed in the toolbar
@@ -83,10 +78,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 /*        Term termT = new Term(1, "name", null, null, 1);
         repo.insert(termT);*/
-        ButterKnife.bind(this);
+        //ButterKnife.bind(this);
 
 
         // to make the Navigation drawer icon always appear on the action bar
+        ImageButton termsButton = (ImageButton) findViewById(R.id.button_terms);
+        termsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentTerms = new Intent(HomeActivity.this, TermActivity.class);
+                intentTerms.putExtra("id", userID);
+                startActivity(intentTerms);
+            }
+        });
 
     }
 
@@ -94,7 +98,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_search) {
             return true;
         }
 
@@ -128,18 +132,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
-
-    @OnClick(R.id.button_terms)
-    public void buttonClick(){
-        Intent terms2 = new Intent(HomeActivity.this, TermActivity.class);
-        terms2.putExtra("id", userID);
-        startActivity(terms2);
-    }
+    }*/
 
 
 }

@@ -7,28 +7,19 @@
     android:background="@drawable/bg"
     tools:context=".UI.Terms.TermActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/term_app_bar"
-        android:fitsSystemWindows="true"
-        android:theme="@style/Theme.MaterialComponents"
-        android:background="@color/white">
+        app:titleTextColor="@color/colorAccent"
+        android:background="@color/white"
+        app:title="Terms">
+    </androidx.appcompat.widget.Toolbar>
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin"
-            app:popupTheme="@style/AppTheme.AppBarOverlay"
-            app:titleTextColor="@color/colorAccent"
-            app:title="Terms">
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_term"/>
 
-<!--
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="0dp"
@@ -44,7 +35,6 @@
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
         app:layout_constraintVertical_bias="0.024"
         tools:listitem="@layout/term_list_item" />
--->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

@@ -4,9 +4,11 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Ignore;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.RewriteQueriesToDropUnusedColumns;
 import androidx.room.RoomWarnings;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.example.course_keeper_capstone.Entity.Term;
@@ -18,7 +20,7 @@ import java.util.Map;
 @Dao
 public interface TermDAO {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Term term);
 
     @Update
@@ -34,4 +36,5 @@ public interface TermDAO {
     @Ignore
     @Query("SELECT * FROM terms JOIN users ON terms.userID = users.Id WHERE terms.userID = users.id AND users.id IN (:userID)")
     List<Term> getUserTerms(int userID);
+
 }
