@@ -1,5 +1,6 @@
 package com.example.course_keeper_capstone.DAO;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -23,7 +24,7 @@ public interface CourseDAO {
     void delete(Course course);
 
     @Query("SELECT * FROM courses ORDER BY courseID ASC")
-    List<Course> getAllCourses();
+    LiveData<List<Course>> getAllCourses();
 
     @Query("SELECT * FROM courses where termID_FK =:termID ORDER BY courseID DESC LIMIT 1")
     Course getSelectedCourse(int termID);

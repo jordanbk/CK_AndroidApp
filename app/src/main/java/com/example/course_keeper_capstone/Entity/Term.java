@@ -25,6 +25,12 @@ public class Term {
         this.userID = userID;
     }
 
+    public Term(String termName, String termStart, String termEnd) {
+        this.termName = termName;
+        this.termStart = termStart;
+        this.termEnd = termEnd;
+    }
+
     public Term() {
     }
 

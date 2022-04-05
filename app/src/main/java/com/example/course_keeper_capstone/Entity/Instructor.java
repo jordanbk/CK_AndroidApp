@@ -2,6 +2,7 @@ package com.example.course_keeper_capstone.Entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "instructors")
@@ -16,16 +17,23 @@ public class Instructor {
     private String instructorPhone;
     @ColumnInfo
     private int courseID;
+    @ColumnInfo
+    private int userID;
 
-    public Instructor(int instructorID, String instructorName, String instructorEmail, String instructorPhone, int courseID) {
+    @Ignore
+    public Instructor(int instructorID, String instructorName, String instructorEmail, String instructorPhone, int courseID, int userID) {
         this.instructorID = instructorID;
         this.instructorName = instructorName;
         this.instructorEmail = instructorEmail;
         this.instructorPhone = instructorPhone;
         this.courseID = courseID;
+        this.userID = userID;
     }
 
-    //Getters
+    public Instructor(String instructorName, String instructorEmail, String instructorPhone, int courseID) {
+    }
+
+//Getters
 
 
     public int getInstructorID() {
@@ -46,6 +54,10 @@ public class Instructor {
 
     public int getCourseID() {
         return courseID;
+    }
+
+    public int getUserID() {
+        return userID;
     }
 
     //Setters
@@ -70,6 +82,10 @@ public class Instructor {
         this.courseID = courseID;
     }
 
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
     @Override
     public String toString() {
         return "Instructor{" +
@@ -78,6 +94,7 @@ public class Instructor {
                 ", instructorEmail='" + instructorEmail + '\'' +
                 ", instructorPhone='" + instructorPhone + '\'' +
                 ", courseID=" + courseID +
+                ", userID=" + userID +
                 '}';
     }
 }

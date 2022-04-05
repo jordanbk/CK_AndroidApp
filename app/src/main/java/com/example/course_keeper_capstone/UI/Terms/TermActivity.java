@@ -1,7 +1,9 @@
 package com.example.course_keeper_capstone.UI.Terms;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +21,10 @@ import com.example.course_keeper_capstone.Database.Repository;
 import com.example.course_keeper_capstone.Entity.Term;
 import com.example.course_keeper_capstone.R;
 import com.example.course_keeper_capstone.Adapters.TermAdapter;
+import com.example.course_keeper_capstone.TermViewModel;
 import com.example.course_keeper_capstone.UI.HomeActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,18 +32,39 @@ import butterknife.ButterKnife;
 public class TermActivity extends AppCompatActivity {
     @BindView(R.id.recycler_view_terms)
     RecyclerView recyclerViewTerms;
+    private static final String TAG = "TermActivity";
     private Repository repository;
     int userID;
     int termID;
     Term term;
-
+    Context context;
+    //private List<Term> userTerms = new ArrayList<>();
+    private TermAdapter termsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term);
         userID = getIntent().getIntExtra("id", -1);
-
         ButterKnife.bind(this);
+
+        repository = new Repository(getApplication());
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_view_terms);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        TermAdapter adapter = new TermAdapter(context);
+        recyclerView.setAdapter(adapter);
+
+        TermViewModel mTermViewModel = new ViewModelProvider(this).get(TermViewModel.class);
+        mTermViewModel.getmTermsByUserId(userID).observe(this, new Observer<List<Term>>() {
+            @Override
+            public void onChanged(List<Term> terms) {
+                //Log.d(TAG, "onChanged " + terms.size());
+                adapter.setUserTerms(terms);
+
+            }
+        });
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         toolbar.setTitle("Terms");
         // Inflate a menu to be displayed in the toolbar
@@ -63,18 +89,7 @@ public class TermActivity extends AppCompatActivity {
                 }
             }
         });
-
-        repository = new Repository(getApplication());
-        RecyclerView recyclerView = findViewById(R.id.recycler_view_terms);
-
-        // populate recycler view with term data
-       final TermAdapter adapter = new TermAdapter(this);
-       recyclerViewTerms.setAdapter(adapter);
-       recyclerViewTerms.setLayoutManager(new LinearLayoutManager(this));
-       adapter.setTerms(repository.getUserTerms(userID));
-
     }
-
 
 
     /**

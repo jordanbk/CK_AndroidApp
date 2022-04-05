@@ -1,6 +1,9 @@
 package com.example.course_keeper_capstone.Database;
 
 import android.app.Application;
+import android.content.Context;
+
+import androidx.lifecycle.LiveData;
 
 import com.example.course_keeper_capstone.DAO.AssessmentDAO;
 import com.example.course_keeper_capstone.DAO.CourseDAO;
@@ -18,22 +21,39 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Repository {
+    private static Repository ourInstance;
+
     private UserDAO mUserDAO;
     private TermDAO mTermDAO;
     private CourseDAO mCourseDAO;
     private AssessmentDAO mAssessmentDAO;
     private InstructorDAO mInstructorDAO;
     private List<User> mAllUsers;
-    private List<Term> mAllTerms;
-    private List<Course> mAllCourses;
-    private List<Assessment> mAllAssessments;
-    private List<Instructor> mAllInstructors;
-    private List<Term> mAllUserTerms;
+    private LiveData<List<Term>> mAllTerms;
+    private LiveData<List<Course>> mAllCourses;
+    private LiveData<List<Assessment>> mAllAssessments;
+    private LiveData<List<Instructor>> mAllInstructors;
+    private LiveData<List<Term>> mAllUserTerms;
     private DatabaseBuilder mDB;
+    int userID;
 
     private static int NUMBER_OF_THREADS=4;
     static final ExecutorService databaseExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
+    public static Repository getDatabase(Context context) {
+        if(ourInstance == null) {
+            ourInstance = new Repository((Application) context);
+        }
+        return ourInstance;
+    }
+    private Repository(Context context) {
+        mDB = DatabaseBuilder.getDatabase(context);
+        mAllTerms = getAllTerms();
+        mAllCourses = getAllCourses();
+        mAllAssessments = getAllAssessments();
+        mAllInstructors = getAllInstructors();
+        mAllUserTerms = mTermDAO.getUserTerms(userID);
+    }
     public Repository(Application application){
         DatabaseBuilder db = DatabaseBuilder.getDatabase(application);
 
@@ -58,10 +78,8 @@ public class Repository {
         return userAccount.getPassword().equals(password);
     }
 
-        // See below: I am trying to get a list of Terms based on the User ID
-        // see TermDAO for associated sql query
 
-    public List<Term> getUserTerms(int id){
+    public LiveData<List<Term>> getUserTerms(int id){
         databaseExecutor.execute(()-> {
             mAllUserTerms = mTermDAO.getUserTerms(id);
         });
@@ -90,7 +108,7 @@ public class Repository {
     /**
      *Get All Terms
      */
-    public List<Term> getAllTerms(){
+    public LiveData<List<Term>> getAllTerms(){
         databaseExecutor.execute(()->{
             mAllTerms = mTermDAO.getAllTerms();
         });
@@ -152,7 +170,7 @@ public class Repository {
      * Get all Courses
      * @return
      */
-    public List<Course> getAllCourses(){
+    public LiveData<List<Course>> getAllCourses(){
         databaseExecutor.execute(()->{
             mAllCourses = mCourseDAO.getAllCourses();
         });
@@ -210,7 +228,7 @@ public class Repository {
         }
     }
 
-    public List<Assessment> getAllAssessments(){
+    public LiveData<List<Assessment>> getAllAssessments(){
         databaseExecutor.execute(()->{
             mAllAssessments = mAssessmentDAO.getAllAssessments();
         });
@@ -270,7 +288,7 @@ public class Repository {
      *
      * @return
      */
-    public List<Instructor> getAllInstructors(){
+    public LiveData<List<Instructor>> getAllInstructors(){
         databaseExecutor.execute(()->{
             mAllInstructors = mInstructorDAO.getAllInstructors();
         });

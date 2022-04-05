@@ -51,7 +51,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         userID = getIntent().getIntExtra("id", -1);
         repo = new Repository(getApplication());
 
@@ -76,10 +75,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
-/*        Term termT = new Term(1, "name", null, null, 1);
-        repo.insert(termT);*/
-        //ButterKnife.bind(this);
-
 
         // to make the Navigation drawer icon always appear on the action bar
         ImageButton termsButton = (ImageButton) findViewById(R.id.button_terms);
@@ -98,7 +93,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.action_search) {
+        if (id == R.id.action_settings) {
             return true;
         }
 
@@ -132,11 +127,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-/*    @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }*/
+    }
 
 
 }

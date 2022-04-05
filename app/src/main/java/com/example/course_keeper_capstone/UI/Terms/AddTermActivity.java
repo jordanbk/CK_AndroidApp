@@ -1,11 +1,13 @@
 package com.example.course_keeper_capstone.UI.Terms;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -13,9 +15,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.course_keeper_capstone.Database.Repository;
+import com.example.course_keeper_capstone.EditViewModel;
 import com.example.course_keeper_capstone.Entity.Term;
 import com.example.course_keeper_capstone.R;
+import com.example.course_keeper_capstone.TermViewModel;
+import com.example.course_keeper_capstone.UI.HomeActivity;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,8 +38,9 @@ public class AddTermActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener termEndDate;
     String dateFormat = "MM/dd/yyyy";
 
-    int userID;
+    private TermViewModel termViewModel;
 
+    int userID;
     private Repository repo;
 
     int termId;
@@ -48,11 +55,14 @@ public class AddTermActivity extends AppCompatActivity {
         repo = new Repository(getApplication());
 
         userID = getIntent().getIntExtra("id", -1);
+
         termNameEdt = findViewById(R.id.term_name_edit);
         termStartEdt = findViewById(R.id.term_start_edit);
         termEndEdt = findViewById(R.id.term_end_edit);
 
         addTermBtn = findViewById(R.id.save_term);
+
+        termViewModel = new ViewModelProvider(this).get(TermViewModel.class);
 
         // initialize calendar object for start date
         termStartDate = new DatePickerDialog.OnDateSetListener() {
@@ -128,18 +138,14 @@ public class AddTermActivity extends AppCompatActivity {
                     Toast.makeText(AddTermActivity.this, "Please make sure all fields are filled out", Toast.LENGTH_LONG).show();
                     return;
                 }
-/*                else if (termId != -1) {
-                    term = new Term(termId, termNameEdt.getText().toString(), termStartEdt.getText().toString(),
-                            termEndEdt.getText().toString());
-                }*/
                 else {
-
-                    term = new Term(++termId, termNameEdt.getText().toString(), termStartEdt.getText().toString(),
+/*                    term = new Term(++termId, termNameEdt.getText().toString(), termStartEdt.getText().toString(),
+                            termEndEdt.getText().toString(), userID);*/
+                    termViewModel.saveUserTerm(termNameEdt.getText().toString(), termStartEdt.getText().toString(),
                             termEndEdt.getText().toString(), userID);
                 }
-                repo.insert(term);
 
-                Intent intent = new Intent(AddTermActivity.this, TermActivity.class);
+                Intent intent = new Intent(AddTermActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
@@ -161,4 +167,12 @@ public class AddTermActivity extends AppCompatActivity {
 
         }
     }
+
+/*    public void saveAndGoBack(){
+        String name = termNameEdt.getText().toString();
+        String startDate = termStartEdt.getText().toString();
+        String endDate = termEndEdt.getText().toString();
+        editViewModel.saveTerm(name, startDate, endDate);
+        finish();
+    }*/
 }

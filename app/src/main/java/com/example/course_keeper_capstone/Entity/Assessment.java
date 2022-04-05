@@ -2,6 +2,7 @@ package com.example.course_keeper_capstone.Entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "assessments")
@@ -18,18 +19,25 @@ public class Assessment {
     private int courseID_FK;
     @ColumnInfo(name = "assessmentKind")
     private String assessmentKind;
+    @ColumnInfo(name = "userID")
+    private int userID;
 
-    public Assessment(int assessmentID, String assessmentTitle, String assessmentStartDate, String assessmentEndDate, int courseID_FK, String assessmentKind) {
+    @Ignore
+    public Assessment(int assessmentID, String assessmentTitle, String assessmentStartDate, String assessmentEndDate, int courseID_FK, String assessmentKind, int userID) {
         this.assessmentID = assessmentID;
         this.assessmentTitle = assessmentTitle;
         this.assessmentStartDate = assessmentStartDate;
         this.assessmentEndDate = assessmentEndDate;
         this.courseID_FK = courseID_FK;
         this.assessmentKind = assessmentKind;
+        this.userID = userID;
     }
 
     public Assessment() {
 
+    }
+
+    public Assessment(String trim, String assessmentStartDate, String assessmentEndDate, String assessmentKind, int courseID_fk) {
     }
 
     //Getters
@@ -55,6 +63,10 @@ public class Assessment {
 
     public String getAssessmentKind() {
         return assessmentKind;
+    }
+
+    public int getUserID() {
+        return userID;
     }
 
     //Setters
@@ -83,6 +95,10 @@ public class Assessment {
         this.assessmentKind = assessmentKind;
     }
 
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
     @Override
     public String toString() {
         return "Assessment{" +
@@ -92,6 +108,7 @@ public class Assessment {
                 ", assessmentEndDate='" + assessmentEndDate + '\'' +
                 ", courseID_FK=" + courseID_FK +
                 ", assessmentKind='" + assessmentKind + '\'' +
+                ", userID=" + userID +
                 '}';
     }
 }

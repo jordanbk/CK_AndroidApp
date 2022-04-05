@@ -1,9 +1,11 @@
 package com.example.course_keeper_capstone.UI.Terms;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,10 +18,13 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.course_keeper_capstone.Adapters.CourseAdapter;
+import com.example.course_keeper_capstone.Adapters.TermAdapter;
 import com.example.course_keeper_capstone.Database.Repository;
+import com.example.course_keeper_capstone.EditViewModel;
 import com.example.course_keeper_capstone.Entity.Course;
 import com.example.course_keeper_capstone.Entity.Term;
 import com.example.course_keeper_capstone.R;
+import com.example.course_keeper_capstone.TermViewModel;
 import com.example.course_keeper_capstone.UI.Courses.AddCourseActivity;
 
 import java.text.SimpleDateFormat;
@@ -44,11 +49,13 @@ public class TermDetailActivity extends AppCompatActivity {
     EditText updateName;
     EditText updateStart;
     EditText updateEnd;
-
+    private List<Term> termData = new ArrayList<>();
+    private TermAdapter mTermAdapter;
     Term termSelected;
-
+    RecyclerView recyclerView;
     Calendar termStartCal = Calendar.getInstance();
     Calendar termEndCal = Calendar.getInstance();
+    private EditViewModel mViewModel;
 
     DatePickerDialog.OnDateSetListener termStartDate;
     DatePickerDialog.OnDateSetListener termEndDate;
@@ -56,36 +63,36 @@ public class TermDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_detail);
-
+        initViewModel();
         // get term data
         termID = getIntent().getIntExtra("termID", -1);
         userID = getIntent().getIntExtra("userID", -1);
 
-        // repository instance
+/*        // repository instance
         repo = new Repository(getApplication());
-        List<Term> allTerms = repo.getAllTerms();
-
+        LiveData<List<Term>> allTerms = repo.getAllTerms();
+        initViewModel();
         // get selected term
-        for(Term term : allTerms) {
+        for(Term term : mViewModel.mTerms) {
             if(term.getTermID() == termID) {
                 termSelected = term;
                 termName = termSelected.getTermName();
                 termStart = termSelected.getTermStart();
                 termEnd = termSelected.getTermEnd();
             }
-        }
+        }*/
 
         // associate editText variables with view ID's
         updateName = findViewById(R.id.term_name_edit_dt);
         updateStart = findViewById(R.id.term_start_edit_dt);
         updateEnd = findViewById(R.id.term_start_edit_dt);
 
-        // populate fields with selected terms data
+/*        // populate fields with selected terms data
         if(termID!=-1) {
             updateName.setText(termName);
             updateStart.setText(termStart);
             updateEnd.setText(termEnd);
-        }
+        }*/
 
 
 
@@ -156,17 +163,17 @@ public class TermDetailActivity extends AppCompatActivity {
 
         // populate recyclerview with associated courses
         repo = new Repository(getApplication());
-        RecyclerView recyclerView = findViewById(R.id.recycler_view_terms_dt);
+        recyclerView = findViewById(R.id.recycler_view_terms_dt);
         final CourseAdapter courseAdapter = new CourseAdapter(TermDetailActivity.this);
         recyclerView.setAdapter(courseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Course> associateCourses = new ArrayList<>();
-        List<Course> allCourses = repo.getAllCourses();
+/*        List<Course> allCourses = repo.getAllCourses();
         for(Course c : repo.getAllCourses()){
             if(c.getTermID_FK() == termID){
                 associateCourses.add(c);
             }
-        }
+        }*/
         courseAdapter.setCourses(associateCourses);
         numCourses = associateCourses.size();
 
@@ -200,7 +207,15 @@ public class TermDetailActivity extends AppCompatActivity {
         });
 
     }
+    private void initViewModel() {
+        mViewModel = ViewModelProviders.of(this).get(EditViewModel.class);
 
+        mViewModel.mLiveTerm.observe(this, term -> {
+            updateName.setText(term.getTermName());
+            updateStart.setText(term.getTermStart());
+            updateEnd.setText(term.getTermEnd());
+        });
+    }
     /**
      *  Validate start and end dates
      * @param startDate

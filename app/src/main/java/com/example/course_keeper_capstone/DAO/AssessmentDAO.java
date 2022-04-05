@@ -1,5 +1,6 @@
 package com.example.course_keeper_capstone.DAO;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -23,5 +24,5 @@ public interface AssessmentDAO {
     void delete(Assessment assessment);
 
     @Query("SELECT * FROM assessments ORDER BY assessmentID ASC")
-    List<Assessment> getAllAssessments();
+    LiveData<List<Assessment>> getAllAssessments();
 }
