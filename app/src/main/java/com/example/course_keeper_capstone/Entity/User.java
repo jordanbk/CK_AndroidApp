@@ -3,6 +3,7 @@ package com.example.course_keeper_capstone.Entity;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -28,13 +29,14 @@ public class User {
         this.username = username;
         this.password = password;
     }
-
+    @Ignore
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
     }
 
+    @Ignore
     public User(String username, String password) {
         this.username = username;
         this.password = password;

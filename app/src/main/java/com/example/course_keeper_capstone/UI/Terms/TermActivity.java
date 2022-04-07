@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,7 +60,7 @@ public class TermActivity extends AppCompatActivity {
         mTermViewModel.getmTermsByUserId(userID).observe(this, new Observer<List<Term>>() {
             @Override
             public void onChanged(List<Term> terms) {
-                //Log.d(TAG, "onChanged " + terms.size());
+                Log.d(TAG, "onChanged " + terms.size());
                 adapter.setUserTerms(terms);
 
             }

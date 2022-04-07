@@ -1,9 +1,11 @@
 package com.example.course_keeper_capstone.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +16,7 @@ import com.example.course_keeper_capstone.DAO.UserDAO;
 import com.example.course_keeper_capstone.Database.Repository;
 import com.example.course_keeper_capstone.Entity.User;
 import com.example.course_keeper_capstone.R;
+import com.example.course_keeper_capstone.UI.Login.LoginViewModel;
 
 public class SignUpActivity extends AppCompatActivity {
     EditText editTextUsername, editTextEmail, editTextPassword, editTextCnfPassword;
@@ -23,12 +26,15 @@ public class SignUpActivity extends AppCompatActivity {
     int id;
     private UserDAO userDao;
     public static String username;
+    LoginViewModel loginViewModel;
+    public static final String tag = "signUpActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         Repository repository = new Repository(getApplication());
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextEmail = findViewById(R.id.editTextEmail);
@@ -56,11 +62,13 @@ public class SignUpActivity extends AppCompatActivity {
                 String confirmPw = editTextCnfPassword.getText().toString().trim();
 
                 if (password.equals(confirmPw)) {
+                    //loginViewModel.registerUser(id++, email, username, password);
                     User user = new User(id++, email, username, password);
                     repository.insert(user);
                     Intent loginPage = new Intent(SignUpActivity.this, MainActivity.class);
                     username = loginPage.getStringExtra("username");
                     loginPage.putExtra("id", id);
+                    //Log.d(tag, String.valueOf(id));
 
                     startActivity(loginPage);
 

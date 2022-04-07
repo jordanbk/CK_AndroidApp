@@ -145,7 +145,8 @@ public class AddTermActivity extends AppCompatActivity {
                             termEndEdt.getText().toString(), userID);
                 }
 
-                Intent intent = new Intent(AddTermActivity.this, HomeActivity.class);
+                Intent intent = new Intent(AddTermActivity.this, TermActivity.class);
+                intent.putExtra("id", userID);
                 startActivity(intent);
             }
         });

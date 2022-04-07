@@ -34,7 +34,9 @@ public class Repository {
     private LiveData<List<Assessment>> mAllAssessments;
     private LiveData<List<Instructor>> mAllInstructors;
     private LiveData<List<Term>> mAllUserTerms;
+    private UserDAO mGetUser;
     private DatabaseBuilder mDB;
+    User mUser;
     int userID;
 
     private static int NUMBER_OF_THREADS=4;
@@ -103,6 +105,19 @@ public class Repository {
             e.printStackTrace();
         }
         return mAllUsers;
+    }
+
+    public User getUser(String username, String password){
+        databaseExecutor.execute(()->{
+            mUser = mUserDAO.getUser(username, password);
+        });
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return mUser;
     }
 
     /**

@@ -1,9 +1,11 @@
 package com.example.course_keeper_capstone.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,7 @@ import com.example.course_keeper_capstone.Database.DatabaseBuilder;
 import com.example.course_keeper_capstone.Database.Repository;
 import com.example.course_keeper_capstone.Entity.User;
 import com.example.course_keeper_capstone.R;
+import com.example.course_keeper_capstone.UI.Login.LoginViewModel;
 
 import java.util.List;
 
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     int id;
     int userID;
     public static String username;
+    private LoginViewModel loginViewModel;
+    public static final String tag = "mainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
         buttonLogin = findViewById(R.id.buttonLogin);
 
         //userID = getIntent().getIntExtra("id", -1);
+        //Bundle extras = getIntent().getExtras();
+
+        Log.d(tag, String.valueOf(id));
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
 
         textViewSignUp.setOnClickListener(new View.OnClickListener() {
@@ -49,20 +58,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, SignUpActivity.class));
             }
         });
-//repo.isValidAccount(username, password
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String username = editUsername.getText().toString().trim();
                 String password = editPassword.getText().toString().trim();
-                List<User> user = repo.getAllUsers();
-                for(User u : repo.getAllUsers()) {
-                    if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
+                User user = new User();
+                user = repo.getUser(username, password);
+                if (user != null) {
+                        //loginViewModel.authorizeUser(id, username, password);
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    //username = intent.getStringExtra("username");
-                        userID = u.getId();
+                    userID = user.getId();
                     intent.putExtra("username", username);
                     intent.putExtra("id", userID);
+                    Log.d(tag, String.valueOf(userID));
 
                     startActivity(intent);
                     finish();
@@ -71,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this,"Username and/or password is incorrect",Toast.LENGTH_SHORT).show();
                     }
                 }
-            }
+
         });
 
 
