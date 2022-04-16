@@ -40,7 +40,7 @@ public class Repository {
     int userID;
 
     private static int NUMBER_OF_THREADS=4;
-    static final ExecutorService databaseExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+   public static final ExecutorService databaseExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public static Repository getDatabase(Context context) {
         if(ourInstance == null) {
@@ -72,6 +72,10 @@ public class Repository {
         }
     }
 
+    public LiveData<List<Course>> getTermCourses(int termID){
+        return mCourseDAO.getTermCourses(termID);
+    }
+
 
     public boolean isValidAccount(String username, final String password)
     {
@@ -82,16 +86,11 @@ public class Repository {
 
 
     public LiveData<List<Term>> getUserTerms(int id){
-        databaseExecutor.execute(()-> {
-            mAllUserTerms = mTermDAO.getUserTerms(id);
-        });
+            return mTermDAO.getUserTerms(id);
+    }
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return mAllUserTerms;
+    public LiveData<List<Term>> searchTerms(String searchQuery){
+        return mTermDAO.searchTerms(searchQuery);
     }
 
     public List<User> getAllUsers(){
@@ -159,12 +158,8 @@ public class Repository {
         databaseExecutor.execute(()->{
             mTermDAO.update(term);
         });
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
-    }
+
+}
 
     /**
      * Delete Terms in db

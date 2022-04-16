@@ -30,4 +30,7 @@ public interface TermDAO {
     @Query("SELECT * FROM terms JOIN users ON terms.userID = users.Id WHERE terms.userID = users.id AND users.id IN (:userID)")
     LiveData<List<Term>> getUserTerms(int userID);
 
+    @Query("SELECT * FROM terms WHERE terms.termName LIKE :searchQuery")
+    LiveData<List<Term>> searchTerms(String searchQuery);
+
 }

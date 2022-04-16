@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    tools:context=".UI.Terms.TermActivity">
+    tools:context=".UI.Instructors.InstructorActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
@@ -13,22 +13,21 @@
         android:layout_height="wrap_content"
         app:titleTextColor="@color/colorAccent"
         android:background="@color/white"
-        app:title="Terms">
+        app:title="Instructors">
     </androidx.appcompat.widget.Toolbar>
 
 
-    <include layout="@layout/content_term"/>
-
+    <include layout="@layout/content_instructor"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
-        android:onClick="add_term"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="40dp"
         android:backgroundTint="@color/white"
         app:borderWidth="0dp"
-        android:src="@drawable/ic_baseline_add_24"/>
+        android:src="@drawable/ic_baseline_add_24"
+        android:contentDescription="@string/add_instructor" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

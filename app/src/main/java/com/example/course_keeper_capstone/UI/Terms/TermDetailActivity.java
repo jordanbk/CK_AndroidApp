@@ -1,6 +1,7 @@
 package com.example.course_keeper_capstone.UI.Terms;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,7 +16,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.Toolbar;
+
 
 import com.example.course_keeper_capstone.Adapters.CourseAdapter;
 import com.example.course_keeper_capstone.Adapters.TermAdapter;
@@ -24,7 +25,6 @@ import com.example.course_keeper_capstone.EditViewModel;
 import com.example.course_keeper_capstone.Entity.Course;
 import com.example.course_keeper_capstone.Entity.Term;
 import com.example.course_keeper_capstone.R;
-import com.example.course_keeper_capstone.TermViewModel;
 import com.example.course_keeper_capstone.UI.Courses.AddCourseActivity;
 
 import java.text.SimpleDateFormat;
@@ -33,11 +33,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 
 public class TermDetailActivity extends AppCompatActivity {
+    public static final String EXTRA_TERMS = "Extra_Terms_Key";
     private Repository repo;
 
     int userID;
@@ -55,44 +56,50 @@ public class TermDetailActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Calendar termStartCal = Calendar.getInstance();
     Calendar termEndCal = Calendar.getInstance();
-    private EditViewModel mViewModel;
-
+    private TermDetailViewModel mViewModel;
+    private List<Course> courseData = new ArrayList<>();
     DatePickerDialog.OnDateSetListener termStartDate;
     DatePickerDialog.OnDateSetListener termEndDate;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_detail);
-        initViewModel();
-        // get term data
-        termID = getIntent().getIntExtra("termID", -1);
-        userID = getIntent().getIntExtra("userID", -1);
+        updateName = findViewById(R.id.term_name_edit_dt);
+        updateStart = findViewById(R.id.term_start_edit_dt);
+        updateEnd = findViewById(R.id.term_end_edit_dt);
 
-/*        // repository instance
+        // get term data
+        Term term = getIntent().getParcelableExtra(EXTRA_TERMS);
+        termID = term.getTermID();
+        userID = term.getUserID();
+        initViewModel(term);
+
+        // repository instance
         repo = new Repository(getApplication());
-        LiveData<List<Term>> allTerms = repo.getAllTerms();
-        initViewModel();
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         // get selected term
-        for(Term term : mViewModel.mTerms) {
-            if(term.getTermID() == termID) {
+        //for(Term term : mViewModel.mLiveTerm) {
+      /*  Term term = new Term();*/
+          /*  if(term.getTermID() == termID) {
                 termSelected = term;
                 termName = termSelected.getTermName();
                 termStart = termSelected.getTermStart();
                 termEnd = termSelected.getTermEnd();
-            }
-        }*/
+            }*/
+        //}
 
         // associate editText variables with view ID's
-        updateName = findViewById(R.id.term_name_edit_dt);
-        updateStart = findViewById(R.id.term_start_edit_dt);
-        updateEnd = findViewById(R.id.term_start_edit_dt);
 
-/*        // populate fields with selected terms data
+
+        // populate fields with selected terms data
         if(termID!=-1) {
-            updateName.setText(termName);
-            updateStart.setText(termStart);
-            updateEnd.setText(termEnd);
-        }*/
+            updateName.setText(term.getTermName());
+            updateStart.setText(term.getTermStart());
+            updateEnd.setText(term.getTermEnd());
+        }
 
 
 
@@ -163,22 +170,18 @@ public class TermDetailActivity extends AppCompatActivity {
 
         // populate recyclerview with associated courses
         repo = new Repository(getApplication());
-        recyclerView = findViewById(R.id.recycler_view_terms_dt);
+        recyclerView = findViewById(R.id.recycler_view_term_courses);
+
         final CourseAdapter courseAdapter = new CourseAdapter(TermDetailActivity.this);
         recyclerView.setAdapter(courseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        List<Course> associateCourses = new ArrayList<>();
-/*        List<Course> allCourses = repo.getAllCourses();
-        for(Course c : repo.getAllCourses()){
-            if(c.getTermID_FK() == termID){
-                associateCourses.add(c);
-            }
-        }*/
-        courseAdapter.setCourses(associateCourses);
-        numCourses = associateCourses.size();
+        LiveData<List<Course>> associatedCourses = mViewModel.getTermCourses(termID);
+        courseAdapter.setCourses(associatedCourses.getValue());
+        //numCourses
+
 
         // setup toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.term_app_bar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Terms");
         // Inflate a menu to be displayed in the toolbar
         toolbar.inflateMenu(R.menu.term_menu);
@@ -207,14 +210,25 @@ public class TermDetailActivity extends AppCompatActivity {
         });
 
     }
-    private void initViewModel() {
-        mViewModel = ViewModelProviders.of(this).get(EditViewModel.class);
 
-        mViewModel.mLiveTerm.observe(this, term -> {
-            updateName.setText(term.getTermName());
-            updateStart.setText(term.getTermStart());
-            updateEnd.setText(term.getTermEnd());
-        });
+
+    private void initViewModel(Term term) {
+        mViewModel = ViewModelProviders.of(this).get(TermDetailViewModel.class);
+       /* mViewModel.saveTerm(term.getTermName(),term.getTermStart(),term.getTermEnd());*/
+/*
+        mViewModel.mLiveTerm.observe(this, terms -> {
+            updateName.setText(terms.getTermName());
+            updateStart.setText(terms.getTermStart());
+            updateEnd.setText(terms.getTermEnd());
+        });*/
+
+       /* final Observer<List<Course>> courseObserver =
+                courseEntities -> {
+                    courseData.clear();
+                    courseData.addAll(courseEntities);
+                };
+*/
+        //mViewModel.getCoursesInTerm(termID).observe(this, courseObserver);
     }
     /**
      *  Validate start and end dates
@@ -259,7 +273,7 @@ public class TermDetailActivity extends AppCompatActivity {
                     updateEnd.getText().toString(), userID);
         }
 
-        repo.update(term);
+        mViewModel.update(term);
         Toast.makeText(getApplicationContext(), "Term updated!", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(TermDetailActivity.this,TermActivity.class);
         intent.putExtra("termID", termID);
@@ -280,4 +294,29 @@ public class TermDetailActivity extends AppCompatActivity {
     }
 
 
+    public void saveTerm(View view) {
+        Term term;
+        if (!checkDate(updateStart.getText().toString(), updateEnd.getText().toString()) ||
+                updateStart.getText().toString().trim().isEmpty() ||
+                updateEnd.getText().toString().trim().isEmpty() || updateEnd.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Please fill out all fields and make the start date is before the end date", Toast.LENGTH_LONG).show();
+            return;
+        }/*
+        else if (termID != -1)
+            term = new Term(termID, updateName.getText().toString(),
+                    updateStart.getText().toString(),updateEnd.getText().toString());*/
+        else {
+/*            List<Term> allTerms = repo.getAllTerms();
+            termID = allTerms.get(allTerms.size() - 1).getTermID();*/
+            term = new Term(termID, updateName.getText().toString(), updateStart.getText().toString(),
+                    updateEnd.getText().toString(), userID);
+        }
+
+        mViewModel.update(term);
+        Toast.makeText(getApplicationContext(), "Term updated!", Toast.LENGTH_LONG).show();
+        finish();
+       /* Intent intent = new Intent(TermDetailActivity.this,TermActivity.class);
+        intent.putExtra("termID", termID);
+        startActivity(intent);*/
+    }
 }

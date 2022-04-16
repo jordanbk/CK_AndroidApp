@@ -8,6 +8,14 @@
     <string name="term_name_add_term">Term Name</string>
     <string name="term_start_add_term">Term Start</string>
     <string name="term_end_add_term">Term End</string>
-    <string name="add_course">Add Course</string>
     <string name="search">search</string>
+    <string name="course_name_course_dt">Course Name</string>
+    <string name="course_start_course_dt">Course Start</string>
+    <string name="course_end_course_dt">Course End</string>
+    <string name="course_status_course_dt">Course Status</string>
+    <string name="course_notes_course_dt">Course Notes</string>
+    <string name="save_course_btn">Save Course</string>
+    <string name="add_instructor">Add Instructor</string>
+    <string name="add_course">Add Course</string>
+    <string name="add_assessment">Add Assessment</string>
 </resources>

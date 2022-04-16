@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+            android:name=".UI.Assessments.AssessmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.Instructors.InstructorActivity"
+            android:exported="false" />
+        <activity
             android:name=".UI.Courses.AddCourseActivity"
             android:exported="false" />
         <activity
@@ -28,13 +34,13 @@
             android:name=".UI.Terms.TermActivity"
             android:exported="false" />
         <activity
-            android:name=".UI.HomeActivity"
+            android:name=".UI.Base.HomeActivity"
             android:exported="true" />
         <activity
-            android:name=".UI.SignUpActivity"
+            android:name=".UI.Base.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".UI.MainActivity"
+            android:name=".UI.Base.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

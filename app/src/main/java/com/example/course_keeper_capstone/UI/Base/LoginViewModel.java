@@ -1,4 +1,4 @@
-package com.example.course_keeper_capstone.UI.Login;
+package com.example.course_keeper_capstone.UI.Base;
 
 import android.app.Application;
 
@@ -6,13 +6,10 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.course_keeper_capstone.Database.Repository;
 import com.example.course_keeper_capstone.Entity.User;
-
-import java.util.List;
 
 public class LoginViewModel extends AndroidViewModel {
     private Repository mRepository;

@@ -1,11 +1,16 @@
 package com.example.course_keeper_capstone.Entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "terms")
-public class Term {
+public class Term implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int termID;
     @ColumnInfo(name = "termName")
@@ -40,6 +45,26 @@ public class Term {
 
     public Term() {
     }
+
+    protected Term(Parcel in) {
+        termID = in.readInt();
+        termName = in.readString();
+        termStart = in.readString();
+        termEnd = in.readString();
+        userID = in.readInt();
+    }
+
+    public static final Creator<Term> CREATOR = new Creator<Term>() {
+        @Override
+        public Term createFromParcel(Parcel in) {
+            return new Term(in);
+        }
+
+        @Override
+        public Term[] newArray(int size) {
+            return new Term[size];
+        }
+    };
 
     //Getters
     public int getTermID() {
@@ -92,5 +117,19 @@ public class Term {
                 ", termEnd='" + termEnd + '\'' +
                 ", userID=" + userID +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(termID);
+        parcel.writeString(termName);
+        parcel.writeString(termStart);
+        parcel.writeString(termEnd);
+        parcel.writeInt(userID);
     }
 }

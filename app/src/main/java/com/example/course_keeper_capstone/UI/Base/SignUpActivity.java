@@ -1,11 +1,10 @@
-package com.example.course_keeper_capstone.UI;
+package com.example.course_keeper_capstone.UI.Base;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +15,6 @@ import com.example.course_keeper_capstone.DAO.UserDAO;
 import com.example.course_keeper_capstone.Database.Repository;
 import com.example.course_keeper_capstone.Entity.User;
 import com.example.course_keeper_capstone.R;
-import com.example.course_keeper_capstone.UI.Login.LoginViewModel;
 
 public class SignUpActivity extends AppCompatActivity {
     EditText editTextUsername, editTextEmail, editTextPassword, editTextCnfPassword;

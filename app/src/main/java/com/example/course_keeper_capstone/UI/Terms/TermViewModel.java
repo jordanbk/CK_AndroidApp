@@ -1,4 +1,4 @@
-package com.example.course_keeper_capstone;
+package com.example.course_keeper_capstone.UI.Terms;
 
 import android.app.Application;
 import android.text.TextUtils;
@@ -35,9 +35,23 @@ public class TermViewModel extends AndroidViewModel {
         mTermsByUserId = mRepository.getUserTerms(userID);
     }
 
+    private MutableLiveData<List<Term>> _termsByUserData = new MutableLiveData<>();
+    public LiveData<List<Term>> termsByUserData = _termsByUserData;
 
     public LiveData<List<Term>> getmTermsByUserId(int userID){
-        return mRepository.getUserTerms(userID);
+      /*  Repository.databaseExecutor.execute(new Runnable() {
+            @Override
+            public void run() {*/
+
+             //  _termsByUserData.postValue(mRepository.getUserTerms(userID).getValue());
+          /*  }
+        });*/
+        return  mRepository.getUserTerms(userID);
+
+    }
+
+    public LiveData<List<Term>> searchTerms(String searchQuery){
+        return mRepository.searchTerms(searchQuery);
     }
 
     public void saveUserTerm(String termName, String termStart, String termEnd, int userID) {

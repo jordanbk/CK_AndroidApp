@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".UI.Terms.TermDetailActivity"
-    tools:showIn="@layout/activity_term_detail">
+    tools:context=".UI.Courses.CourseDetailActivity"
+    tools:showIn="@layout/activity_course_detail">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="vertical"
@@ -16,67 +16,82 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/term_name_edit_dt"
+            android:id="@+id/course_name_edit_dt"
             android:layout_margin="@dimen/text_margin"
-            android:hint="@string/term_name_add_term"
+            android:hint="@string/course_name_course_dt"
             android:inputType="textCapWords"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/term_start_edit_dt"
+            android:id="@+id/course_start_edit_dt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
             android:layout_marginTop="16dp"
-            android:hint="@string/term_start_add_term"
+            android:hint="@string/course_start_course_dt"
             android:inputType="date"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/term_name_edit_dt" />
+            app:layout_constraintTop_toBottomOf="@+id/course_name_edit_dt" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/term_end_edit_dt"
-            android:hint="@string/term_end_add_term"
+            android:id="@+id/course_end_edit_dt"
+            android:hint="@string/course_end_course_dt"
             android:layout_margin="@dimen/text_margin"
-            app:layout_constraintTop_toBottomOf="@+id/term_start_edit_dt"
+            app:layout_constraintTop_toBottomOf="@+id/course_start_edit_dt"
             app:layout_constraintStart_toStartOf="parent"
             android:inputType="date" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/course_status_edit_dt"
+            android:hint="@string/course_status_course_dt"
+            android:layout_margin="@dimen/text_margin"
+            app:layout_constraintTop_toBottomOf="@+id/course_end_edit_dt"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/course_notes_course_dt"
+            android:hint="@string/course_notes_course_dt"
+            android:layout_margin="@dimen/text_margin"
+            app:layout_constraintTop_toBottomOf="@+id/course_status_edit_dt"
+            app:layout_constraintStart_toStartOf="parent" />
         <Button
-            android:id="@+id/save_term_dt"
+            android:id="@+id/save_course_dt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/save_term_btn"
-            android:onClick="saveTerm"
+            android:text="@string/save_course_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/term_end_edit_dt" />
-
+            app:layout_constraintTop_toBottomOf="@+id/course_notes_course_dt" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
-            app:layout_constraintTop_toBottomOf="@id/save_term_dt"
-            android:id="@+id/textView_term_dt"
-            android:text="Associated Courses"
+            app:layout_constraintTop_toBottomOf="@id/save_course_dt"
+            android:id="@+id/textView_course_dt"
+            android:text="Associated Instructors"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="@color/colorPrimaryDark"
             android:layout_marginTop="20dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_term_courses"
+            android:id="@+id/recycler_view_course_instructors"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
             android:layout_marginTop="20dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_term_dt"
-            tools:layout_editor_absoluteX="14dp" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_course_dt"
+            tools:layout_editor_absoluteX="16dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

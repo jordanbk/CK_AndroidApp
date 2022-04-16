@@ -1,4 +1,4 @@
-package com.example.course_keeper_capstone.UI;
+package com.example.course_keeper_capstone.UI.Base;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,9 +17,6 @@ import com.example.course_keeper_capstone.Database.DatabaseBuilder;
 import com.example.course_keeper_capstone.Database.Repository;
 import com.example.course_keeper_capstone.Entity.User;
 import com.example.course_keeper_capstone.R;
-import com.example.course_keeper_capstone.UI.Login.LoginViewModel;
-
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {

@@ -1,20 +1,18 @@
 package com.example.course_keeper_capstone.UI.Terms;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -22,9 +20,9 @@ import com.example.course_keeper_capstone.Database.Repository;
 import com.example.course_keeper_capstone.Entity.Term;
 import com.example.course_keeper_capstone.R;
 import com.example.course_keeper_capstone.Adapters.TermAdapter;
-import com.example.course_keeper_capstone.TermViewModel;
-import com.example.course_keeper_capstone.UI.HomeActivity;
+import com.example.course_keeper_capstone.UI.Base.HomeActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,34 +37,40 @@ public class TermActivity extends AppCompatActivity {
     int termID;
     Term term;
     Context context;
-    //private List<Term> userTerms = new ArrayList<>();
+    private List<Term> userTerms = new ArrayList<>();
     private TermAdapter termsAdapter;
+    private Toolbar toolbar;
+    TermViewModel mTermViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term);
         userID = getIntent().getIntExtra("id", -1);
         ButterKnife.bind(this);
-
+        toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
         repository = new Repository(getApplication());
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view_terms);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
-        TermAdapter adapter = new TermAdapter(context);
-        recyclerView.setAdapter(adapter);
+        context = TermActivity.this;
+         termsAdapter = new TermAdapter(userTerms,context);
+        //recyclerView.setHasFixedSize(true);
+        //TermAdapter adapter =  new TermAdapter();
+        recyclerView.setAdapter(termsAdapter);
 
         TermViewModel mTermViewModel = new ViewModelProvider(this).get(TermViewModel.class);
+        //mTermViewModel.getmTermsByUserId(userID);
+
+
         mTermViewModel.getmTermsByUserId(userID).observe(this, new Observer<List<Term>>() {
             @Override
             public void onChanged(List<Term> terms) {
-                Log.d(TAG, "onChanged " + terms.size());
-                adapter.setUserTerms(terms);
-
+                termsAdapter.setUserTerms(terms);
             }
         });
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+
         toolbar.setTitle("Terms");
         // Inflate a menu to be displayed in the toolbar
         toolbar.inflateMenu(R.menu.term_activity_toolbar);
@@ -75,18 +79,13 @@ public class TermActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.action_search_terms:
-                        Context context = TermActivity.this;
-                        String message = "search clicked";
-                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                        return true;
                     case R.id.action_home_term:
                         Intent intent2 = new Intent(TermActivity.this, HomeActivity.class);
                         startActivity(intent2);
                         return true;
                     default:
                         //default intent
-                        return true;
+                        return false;
                 }
             }
         });
@@ -115,8 +114,23 @@ public class TermActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.term_activity_toolbar, menu);
-        return true;
-    }
+        getMenuInflater().inflate(R.menu.menu_item, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Type search here");
+        //searchView.isSubmitButtonEnabled();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                termsAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
 }

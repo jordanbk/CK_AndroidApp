@@ -1,38 +1,26 @@
-package com.example.course_keeper_capstone.UI;
+package com.example.course_keeper_capstone.UI.Base;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import android.annotation.SuppressLint;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.course_keeper_capstone.Database.Repository;
-import com.example.course_keeper_capstone.Entity.Term;
 import com.example.course_keeper_capstone.Entity.User;
 import com.example.course_keeper_capstone.R;
 import com.example.course_keeper_capstone.UI.Terms.TermActivity;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.List;
-import java.util.Locale;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 /*    @BindView(R.id.menu_username)

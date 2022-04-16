@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_top"
             android:hint="Username"
+            android:text="ron"
             android:inputType="textPersonName"
             android:padding="15dp" />
 
@@ -53,6 +54,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_bottom"
             android:hint="Password"
+            android:text="friday"
             android:inputType="textPassword"
             android:padding="15dp" />
 

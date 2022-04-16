@@ -25,6 +25,24 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_term_detail"/>
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <include layout="@layout/content_term_detail"/>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab_add_course"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="40dp"
+        android:backgroundTint="@color/white"
+        app:borderWidth="0dp"
+        android:src="@drawable/ic_baseline_add_24"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
