@@ -1,76 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".UI.Courses.AddCourseActivity"
     tools:showIn="@layout/activity_add_course">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/course_name_til"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/course_name_edit_dt"
             android:layout_margin="@dimen/text_margin"
-            android:hint="@string/course_name_course_dt"
-            android:inputType="textCapWords"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/course_start_edit_dt"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/course_name_edit_dt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/course_name_course_dt"
+                android:inputType="textCapWords" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/course_start_til"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
             android:layout_marginTop="16dp"
-            android:hint="@string/course_start_course_dt"
-            android:inputType="date"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/course_name_edit_dt" />
+            app:layout_constraintTop_toBottomOf="@+id/course_name_til">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/course_start_edit_dt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/course_start_course_dt"
+                android:focusable="false"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/course_end_til"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/course_end_edit_dt"
-            android:hint="@string/course_end_course_dt"
             android:layout_margin="@dimen/text_margin"
-            app:layout_constraintTop_toBottomOf="@+id/course_start_edit_dt"
             app:layout_constraintStart_toStartOf="parent"
-            android:inputType="date" />
+            app:layout_constraintTop_toBottomOf="@+id/course_start_til">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/course_end_edit_dt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/course_end_course_dt"
+                android:focusable="false"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/course_status_til"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/course_status_edit_dt"
-            android:hint="@string/course_status_course_dt"
             android:layout_margin="@dimen/text_margin"
-            app:layout_constraintTop_toBottomOf="@+id/course_end_edit_dt"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/course_end_til">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/course_status_edit_dt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/course_status_course_dt" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/course_notes_til"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/course_notes_course_dt"
+            android:layout_margin="@dimen/text_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/course_status_til">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/course_notes_edit_dt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/course_notes_course_dt" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/spinnerTerm"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/text_margin"
+            android:layout_marginStart="12dp"
+            android:entries="@array/terms"
             android:hint="@string/course_notes_course_dt"
-            android:layout_margin="@dimen/text_margin"
-            app:layout_constraintTop_toBottomOf="@+id/course_status_edit_dt"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/save_course_dt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/course_notes_til"
+            app:layout_constraintVertical_bias="0.0" />
+
         <Button
             android:id="@+id/save_course_dt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="32dp"
             android:text="@string/add_course"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/course_notes_course_dt" />
+            app:layout_constraintTop_toBottomOf="@+id/spinnerTerm" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

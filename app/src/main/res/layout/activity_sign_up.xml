@@ -8,19 +8,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_above="@id/input_group"
+        android:layout_alignParentTop="true"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:gravity="center"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/input_group">
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:text="SIGN UP"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
     </LinearLayout>
 
 
@@ -28,49 +29,72 @@
         android:id="@+id/input_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginBottom="50dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center">
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editTextUsername"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilUserName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edit_sign_up"
-            android:hint="Username"
-            android:inputType="textPersonName"
-            android:padding="15dp" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/editTextEmail"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_sign_up"
+                android:hint="Username"
+                android:inputType="textPersonName"
+                android:padding="15dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilEmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edit_sign_up"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:padding="15dp" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/editTextPassword"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_sign_up"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:padding="15dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edit_sign_up"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="15dp"/>
-        <EditText
-            android:id="@+id/editTextCnfPassword"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_sign_up"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="15dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilCnfPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edit_sign_up"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="15dp"/>
+            android:layout_height="wrap_content">
 
-
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextCnfPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_sign_up"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="15dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/buttonRegister"
@@ -81,20 +105,20 @@
             android:text="SIGN UP"
             android:textAllCaps="false"
             android:textColor="@color/colorAccent"
-            android:textSize="17sp"/>
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/textViewLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
+            android:fontFamily="sans-serif"
             android:padding="10dp"
             android:text="Already Have an Account?  Sign in"
             android:textAllCaps="true"
-            android:textSize="13dp"
-            android:textStyle="bold"
             android:textColor="@color/colorAccent"
-            android:fontFamily="sans-serif"/>
+            android:textSize="13dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </RelativeLayout>

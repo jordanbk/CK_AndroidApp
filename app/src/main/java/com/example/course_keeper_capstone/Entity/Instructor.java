@@ -1,12 +1,20 @@
 package com.example.course_keeper_capstone.Entity;
 
+import static androidx.room.ForeignKey.CASCADE;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "instructors")
-public class Instructor {
+@Entity(tableName = "instructors", foreignKeys = {@ForeignKey(entity = Course.class, parentColumns = {"courseID"}, childColumns = "courseID", onDelete = CASCADE)},
+        indices = {@Index(value = "courseID")})
+public class Instructor implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int instructorID;
     @ColumnInfo
@@ -20,7 +28,7 @@ public class Instructor {
     @ColumnInfo
     private int userID;
 
-    @Ignore
+
     public Instructor(int instructorID, String instructorName, String instructorEmail, String instructorPhone, int courseID, int userID) {
         this.instructorID = instructorID;
         this.instructorName = instructorName;
@@ -30,11 +38,40 @@ public class Instructor {
         this.userID = userID;
     }
 
-    public Instructor(String instructorName, String instructorEmail, String instructorPhone, int courseID) {
+    @Ignore
+    public Instructor(String instructorName, String instructorEmail, String instructorPhone, int courseID, int userID) {
+        this.instructorName = instructorName;
+        this.instructorEmail = instructorEmail;
+        this.instructorPhone = instructorPhone;
+        this.courseID = courseID;
+        this.userID = userID;
     }
 
-//Getters
+    @Ignore
+    public Instructor() {
+    }
 
+
+    protected Instructor(Parcel in) {
+        instructorID = in.readInt();
+        instructorName = in.readString();
+        instructorEmail = in.readString();
+        instructorPhone = in.readString();
+        courseID = in.readInt();
+        userID = in.readInt();
+    }
+
+    public static final Creator<Instructor> CREATOR = new Creator<Instructor>() {
+        @Override
+        public Instructor createFromParcel(Parcel in) {
+            return new Instructor(in);
+        }
+
+        @Override
+        public Instructor[] newArray(int size) {
+            return new Instructor[size];
+        }
+    };
 
     public int getInstructorID() {
         return instructorID;
@@ -88,7 +125,7 @@ public class Instructor {
 
     @Override
     public String toString() {
-        return "Instructor{" +
+        return "InstructorR{" +
                 "instructorID=" + instructorID +
                 ", instructorName='" + instructorName + '\'' +
                 ", instructorEmail='" + instructorEmail + '\'' +
@@ -96,5 +133,20 @@ public class Instructor {
                 ", courseID=" + courseID +
                 ", userID=" + userID +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(instructorID);
+        dest.writeString(instructorName);
+        dest.writeString(instructorEmail);
+        dest.writeString(instructorPhone);
+        dest.writeInt(courseID);
+        dest.writeInt(userID);
     }
 }

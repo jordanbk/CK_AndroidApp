@@ -1,12 +1,18 @@
 package com.example.course_keeper_capstone.Entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "courses")
-public class Course {
+@Entity(tableName = "courses", foreignKeys = {@ForeignKey(entity = Term.class, parentColumns = {"termID"}, childColumns = "termID_FK", onDelete = ForeignKey.CASCADE)},
+        indices = {@Index(value = "termID_FK")})
+public class Course implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int courseID;
     @ColumnInfo(name = "courseTitle")
@@ -19,35 +25,61 @@ public class Course {
     private String courseEnd;
     @ColumnInfo(name = "courseNotes")
     private String courseNotes;
-    @ColumnInfo(name = "courseAlert")
-    private boolean courseAlert;
     @ColumnInfo(name = "termID_FK")
     private int termID_FK;
-    @ColumnInfo (name = "userID")
+    @ColumnInfo(name = "userID")
     private int userID;
 
-    @Ignore
-    public Course(int courseID, String courseTitle, String courseStatus, String courseStart, String courseEnd, String courseNotes, boolean courseAlert, int termID_FK, int userID) {
+
+    public Course(int courseID, String courseTitle, String courseStatus, String courseStart, String courseEnd, String courseNotes, int termID_FK, int userID) {
         this.courseID = courseID;
         this.courseTitle = courseTitle;
         this.courseStatus = courseStatus;
         this.courseStart = courseStart;
         this.courseEnd = courseEnd;
         this.courseNotes = courseNotes;
-        this.courseAlert = courseAlert;
         this.termID_FK = termID_FK;
         this.userID = userID;
     }
 
+    @Ignore
     public Course() {
-
     }
 
-    public Course(String courseTitle, String courseStart, String courseEnd, String courseStatus, int termID_fk) {
+    @Ignore
+    public Course(String courseTitle, String courseStatus, String courseStart, String courseEnd, String courseNotes, int termID_FK, int userID) {
+        this.courseTitle = courseTitle;
+        this.courseStatus = courseStatus;
+        this.courseStart = courseStart;
+        this.courseEnd = courseEnd;
+        this.courseNotes = courseNotes;
+        this.termID_FK = termID_FK;
+        this.userID = userID;
     }
-
-
     //Getters
+
+    protected Course(Parcel in) {
+        courseID = in.readInt();
+        courseTitle = in.readString();
+        courseStatus = in.readString();
+        courseStart = in.readString();
+        courseEnd = in.readString();
+        courseNotes = in.readString();
+        termID_FK = in.readInt();
+        userID = in.readInt();
+    }
+
+    public static final Creator<Course> CREATOR = new Creator<Course>() {
+        @Override
+        public Course createFromParcel(Parcel in) {
+            return new Course(in);
+        }
+
+        @Override
+        public Course[] newArray(int size) {
+            return new Course[size];
+        }
+    };
 
     public int getCourseID() {
         return courseID;
@@ -72,8 +104,6 @@ public class Course {
     public String getCourseNotes() {
         return courseNotes;
     }
-
-    public boolean isCourseAlert() { return courseAlert; }
 
     public int getTermID_FK() {
         return termID_FK;
@@ -109,10 +139,6 @@ public class Course {
         this.courseNotes = courseNotes;
     }
 
-    public void setCourseAlert(boolean courseAlert) {
-        this.courseAlert = courseAlert;
-    }
-
     public void setTermID_FK(int termID_FK) {
         this.termID_FK = termID_FK;
     }
@@ -123,16 +149,32 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" +
+        return "CourseR{" +
                 "courseID=" + courseID +
                 ", courseTitle='" + courseTitle + '\'' +
                 ", courseStatus='" + courseStatus + '\'' +
                 ", courseStart='" + courseStart + '\'' +
                 ", courseEnd='" + courseEnd + '\'' +
                 ", courseNotes='" + courseNotes + '\'' +
-                ", courseAlert=" + courseAlert +
                 ", termID_FK=" + termID_FK +
                 ", userID=" + userID +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(courseID);
+        parcel.writeString(courseTitle);
+        parcel.writeString(courseStatus);
+        parcel.writeString(courseStart);
+        parcel.writeString(courseEnd);
+        parcel.writeString(courseNotes);
+        parcel.writeInt(termID_FK);
+        parcel.writeInt(userID);
     }
 }

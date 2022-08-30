@@ -1,94 +1,131 @@
 package com.example.course_keeper_capstone.Adapters;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.course_keeper_capstone.Entity.Course;
-import com.example.course_keeper_capstone.Entity.Term;
 import com.example.course_keeper_capstone.R;
-import com.example.course_keeper_capstone.UI.Courses.CourseDetailActivity;
-import com.example.course_keeper_capstone.UI.Terms.TermDetailActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
+public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> implements Filterable {
+    private List<Course> userCourses;
+    List<Course> list = new ArrayList<>();
+    private OnItemClickListener listener;
+
+    public CourseAdapter(List<Course> userCourses, OnItemClickListener listener) {
+        this.listener = listener;
+        this.userCourses = new ArrayList<>(userCourses);
+    }
 
 
-    class CourseViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.card_term_title)
+    @NonNull
+    @Override
+    public CourseAdapter.CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
+        View view = mInflater.inflate(R.layout.card_layout_courses,parent,false);
+        return new CourseAdapter.CourseViewHolder(view);
+    }
+
+    @Override
+    public Filter getFilter() {
+        return courseFilter;
+    }
+
+    Filter courseFilter = new Filter() {
+        //run on background thread
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<Course> filteredCoursesList = new ArrayList<>();
+            if(charSequence == null || charSequence.length() ==0){
+                filteredCoursesList.addAll(list);
+            } else{
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+                for(Course courses : list){
+                    if(courses.getCourseTitle().toLowerCase().contains(filterPattern)){
+                        filteredCoursesList.add(courses);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredCoursesList;
+            results.count = filteredCoursesList.size();
+            return results;
+
+        }
+        //runs on a ui thread
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            userCourses.clear();
+            userCourses.addAll((ArrayList)filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    class CourseViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.card_course_title)
         TextView tvTitle;
-        @BindView(R.id.card_term_dates)
+        @BindView(R.id.card_course_dates)
         TextView tvDates;
-        //private final TextView courseItemView;
-
+        @BindView(R.id.course_status)
+        TextView tvStatus;
+        @BindView(R.id.course_notes)
+        TextView tvNotes;
         public CourseViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            //this.courseItemView = itemView.findViewById(R.id.textView2);
-            itemView.setOnClickListener(new View.OnClickListener(){
 
+            itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
                     int position = getAdapterPosition();
-                    final Course current = mCourses.get(position);
-                    Intent intent = new Intent(context, CourseDetailActivity.class);
-                    intent.putExtra("courseID", current.getCourseID());
-                    intent.putExtra("title", current.getCourseTitle());
-                    intent.putExtra("status", current.getCourseStatus());
-                    intent.putExtra("start", current.getCourseStart());
-                    intent.putExtra("end", current.getCourseEnd());
-                    intent.putExtra("notes", current.getCourseNotes());
-                    intent.putExtra("termID", current.getTermID_FK());
-                    intent.putExtra("position", position);
-                    context.startActivity(intent);
+                    final Course currentCourse = userCourses.get(position);
+                    listener.onItemClick(currentCourse);
                 }
             });
         }
     }
-    private List<Course> mCourses;
-    private final Context context;
-    private final LayoutInflater mInflator;
-    public CourseAdapter(TermDetailActivity context) {
-        mInflator = LayoutInflater.from(context);
-        this.context = context;
-    }
 
-    @NonNull
-    @Override
-    public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflator.inflate(R.layout.card_layout_courses,parent,false);
-        return new CourseViewHolder(itemView);
-    }
 
     @Override
-    public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
-        Course current = mCourses.get(position);
-        holder.tvTitle.setText(current.getCourseTitle());
-        String startEnd = current.getCourseStart() + " to " + current.getCourseEnd();
+    public void onBindViewHolder(@NonNull CourseAdapter.CourseViewHolder holder, int position) {
+        Course currentCourse = userCourses.get(position);
+        holder.tvTitle.setText(currentCourse.getCourseTitle());
+        String startEnd = currentCourse.getCourseStart() + " to " + currentCourse.getCourseEnd();
         holder.tvDates.setText(startEnd);
+        holder.tvStatus.setText(currentCourse.getCourseStatus());
+        holder.tvNotes.setText(currentCourse.getCourseNotes());
+
     }
+
+    public void setUserCourses(List<Course> course){
+        userCourses.clear();
+        userCourses.addAll(course);
+        this.list.addAll(course);
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getItemCount() {
-        if(mCourses != null)
-            return mCourses.size();
-        else return 0;
+        return userCourses.size();
     }
 
-    public void setCourses(List<Course> courses){
-        mCourses = courses;
-    }
 
+    public interface  OnItemClickListener{
+        void onItemClick(Course course);
+    }
 
 }

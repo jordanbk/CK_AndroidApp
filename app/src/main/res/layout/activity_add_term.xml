@@ -6,26 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".UI.Terms.AddTermActivity">
 
-        <com.google.android.material.appbar.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/term_app_bar"
+        android:fitsSystemWindows="true"
+        android:theme="@style/Theme.MaterialComponents"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/term_app_bar"
-            android:fitsSystemWindows="true"
-            android:theme="@style/Theme.MaterialComponents"
-            android:background="@color/white">
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/AppTheme.AppBarOverlay"
+            app:titleTextColor="@color/colorAccent"
+            app:title="Terms">
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar2"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.AppBarOverlay"
-                app:titleTextColor="@color/colorAccent"
-                app:title="Terms">
-            </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <include layout="@layout/content_add_term"/>
+    <include layout="@layout/content_add_term"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

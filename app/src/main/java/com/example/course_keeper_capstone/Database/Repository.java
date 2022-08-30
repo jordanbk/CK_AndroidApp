@@ -15,6 +15,9 @@ import com.example.course_keeper_capstone.Entity.Course;
 import com.example.course_keeper_capstone.Entity.Instructor;
 import com.example.course_keeper_capstone.Entity.Term;
 import com.example.course_keeper_capstone.Entity.User;
+import com.example.course_keeper_capstone.UI.reports.models.AssessmentR;
+import com.example.course_keeper_capstone.UI.reports.models.CourseR;
+import com.example.course_keeper_capstone.UI.reports.models.InstructorR;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -29,72 +32,56 @@ public class Repository {
     private AssessmentDAO mAssessmentDAO;
     private InstructorDAO mInstructorDAO;
     private List<User> mAllUsers;
-    private LiveData<List<Term>> mAllTerms;
     private LiveData<List<Course>> mAllCourses;
     private LiveData<List<Assessment>> mAllAssessments;
     private LiveData<List<Instructor>> mAllInstructors;
-    private LiveData<List<Term>> mAllUserTerms;
-    private UserDAO mGetUser;
-    private DatabaseBuilder mDB;
-    User mUser;
-    int userID;
 
-    private static int NUMBER_OF_THREADS=4;
-   public static final ExecutorService databaseExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    private static int NUMBER_OF_THREADS = 4;
+    public static final ExecutorService databaseExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public static Repository getDatabase(Context context) {
-        if(ourInstance == null) {
-            ourInstance = new Repository((Application) context);
+        return getRepository((Application) context);
+    }
+
+    public static Repository getRepository(Application application) {
+        if (ourInstance == null) {
+            ourInstance = new Repository(application);
         }
         return ourInstance;
     }
-    private Repository(Context context) {
-        mDB = DatabaseBuilder.getDatabase(context);
-        mAllTerms = getAllTerms();
-        mAllCourses = getAllCourses();
-        mAllAssessments = getAllAssessments();
-        mAllInstructors = getAllInstructors();
-        mAllUserTerms = mTermDAO.getUserTerms(userID);
-    }
-    public Repository(Application application){
-        DatabaseBuilder db = DatabaseBuilder.getDatabase(application);
 
+    public Repository(Application application) {
+        DatabaseBuilder db = DatabaseBuilder.getDatabase(application);
         mUserDAO = db.userDAO();
         mTermDAO = db.termDAO();
         mCourseDAO = db.courseDAO();
         mAssessmentDAO = db.assessmentDAO();
         mInstructorDAO = db.instructorDAO();
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public LiveData<List<Course>> getTermCourses(int termID){
-        return mCourseDAO.getTermCourses(termID);
     }
 
 
-    public boolean isValidAccount(String username, final String password)
-    {
-
-        User userAccount = mUserDAO.getUser(username, password);
-        return userAccount.getPassword().equals(password);
+    public LiveData<List<Term>> getUserTerms(int id) {
+        return mTermDAO.getUserTerms(id);
     }
 
-
-    public LiveData<List<Term>> getUserTerms(int id){
-            return mTermDAO.getUserTerms(id);
+    public LiveData<List<Course>> getUserCourses(int id) {
+        return mCourseDAO.getUserCourses(id);
     }
 
-    public LiveData<List<Term>> searchTerms(String searchQuery){
+    public LiveData<List<Term>> searchTerms(String searchQuery) {
         return mTermDAO.searchTerms(searchQuery);
     }
 
-    public List<User> getAllUsers(){
-        databaseExecutor.execute(()->{
+    public LiveData<List<Assessment>> getUserAssessments(int userID) {
+        return mAssessmentDAO.getUserAssessments(userID);
+    }
+
+    public LiveData<List<Instructor>> getUserInstructors(int userID) {
+        return mInstructorDAO.getUserInstructors(userID);
+    }
+
+    public List<User> getAllUsers() {
+        databaseExecutor.execute(() -> {
             mAllUsers = mUserDAO.getAllUsers();
         });
 
@@ -106,82 +93,51 @@ public class Repository {
         return mAllUsers;
     }
 
-    public User getUser(String username, String password){
-        databaseExecutor.execute(()->{
-            mUser = mUserDAO.getUser(username, password);
-        });
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return mUser;
+    public User getUser(String username, String password) {
+        return mUserDAO.getUser(username, password);
     }
 
     /**
-     *Get All Terms
+     * Get All Terms
      */
-    public LiveData<List<Term>> getAllTerms(){
-        databaseExecutor.execute(()->{
-            mAllTerms = mTermDAO.getAllTerms();
-        });
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return mAllTerms;
+    public LiveData<List<Term>> getAllTerms() {
+        return mTermDAO.getAllTerms();
     }
 
     /**
      * Insert Terms in db
+     *
      * @param term
      */
-    public void insert(Term term){
-        databaseExecutor.execute(()->{
-            mTermDAO.insert(term);
-        });
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
+    public long insert(Term term) {
+        return mTermDAO.insert(term);
     }
 
     /**
      * Update Terms in db
+     *
      * @param term
      */
-    public void update(Term term){
-        databaseExecutor.execute(()->{
-            mTermDAO.update(term);
-        });
-
-}
+    public int update(Term term) {
+        return mTermDAO.update(term);
+    }
 
     /**
      * Delete Terms in db
+     *
      * @param term
      */
-    public void delete(Term term){
-        databaseExecutor.execute(()->{
-            mTermDAO.delete(term);
-        });
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
+    public int delete(Term term) {
+        return mTermDAO.delete(term);
     }
 
     /**
      * Get all Courses
+     *
      * @return
      */
-    public LiveData<List<Course>> getAllCourses(){
-        databaseExecutor.execute(()->{
+    public LiveData<List<Course>> getAllCourses() {
+        databaseExecutor.execute(() -> {
             mAllCourses = mCourseDAO.getAllCourses();
         });
 
@@ -195,51 +151,33 @@ public class Repository {
 
     /**
      * Insert Courses in db
+     *
      * @param course
      */
-    public void insert(Course course){
-        databaseExecutor.execute(()->{
-            mCourseDAO.insert(course);
-        });
-        try{
-            Thread.sleep(1000);
-        } catch(InterruptedException e){
-            e.printStackTrace();
-        }
+    public long insert(Course course) {
+        return mCourseDAO.insert(course);
     }
 
     /**
      * Update Courses in db
+     *
      * @param course
      */
-    public void update(Course course){
-        databaseExecutor.execute(()->{
-            mCourseDAO.update(course);
-        });
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
+    public int update(Course course) {
+        return mCourseDAO.update(course);
     }
 
     /**
      * Delete Courses in db
+     *
      * @param course
      */
-    public void delete(Course course){
-        databaseExecutor.execute(()->{
-            mCourseDAO.delete(course);
-        });
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
+    public int delete(Course course) {
+        return mCourseDAO.delete(course);
     }
 
-    public LiveData<List<Assessment>> getAllAssessments(){
-        databaseExecutor.execute(()->{
+    public LiveData<List<Assessment>> getAllAssessments() {
+        databaseExecutor.execute(() -> {
             mAllAssessments = mAssessmentDAO.getAllAssessments();
         });
         try {
@@ -249,57 +187,39 @@ public class Repository {
         }
         return mAllAssessments;
     }
+
     /**
      * Insert Assessments in db
+     *
      * @param assessment
      */
-    public void insert(Assessment assessment){
-        databaseExecutor.execute(()->{
-            mAssessmentDAO.insert(assessment);
-        });
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
+    public long insert(Assessment assessment) {
+        return mAssessmentDAO.insert(assessment);
     }
 
     /**
      * Update Assessments in db
+     *
      * @param assessment
      */
-    public void update(Assessment assessment){
-        databaseExecutor.execute(()->{
-            mAssessmentDAO.update(assessment);
-        });
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
+    public int update(Assessment assessment) {
+        return mAssessmentDAO.update(assessment);
     }
 
     /**
      * Delete Assessments in db
+     *
      * @param assessment
      */
-    public void delete(Assessment assessment){
-        databaseExecutor.execute(()->{
-            mAssessmentDAO.delete(assessment);
-        });
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
+    public int delete(Assessment assessment) {
+        return mAssessmentDAO.delete(assessment);
     }
 
     /**
-     *
      * @return
      */
-    public LiveData<List<Instructor>> getAllInstructors(){
-        databaseExecutor.execute(()->{
+    public LiveData<List<Instructor>> getAllInstructors() {
+        databaseExecutor.execute(() -> {
             mAllInstructors = mInstructorDAO.getAllInstructors();
         });
 
@@ -313,80 +233,75 @@ public class Repository {
 
     /**
      * Insert Instructors in db
+     *
      * @param instructor
      */
-    public void insert(Instructor instructor){
-        databaseExecutor.execute(()->{
-            mInstructorDAO.insert(instructor);
-        });
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
+    public long insert(Instructor instructor) {
+        return mInstructorDAO.insert(instructor);
     }
 
     /**
      * Update Instructors in db
+     *
      * @param instructor
      */
-    public void update(Instructor instructor){
-        databaseExecutor.execute(()->{
-            mInstructorDAO.update(instructor);
-        });
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
+    public int update(Instructor instructor) {
+        return mInstructorDAO.update(instructor);
     }
 
     /**
      * Delete Instructors in db
+     *
      * @param instructor
      */
-    public void delete(Instructor instructor){
-        databaseExecutor.execute(()->{
-            mInstructorDAO.delete(instructor);
-        });
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
+    public int delete(Instructor instructor) {
+        return mInstructorDAO.delete(instructor);
     }
 
-    public void insert(User user) {
-        databaseExecutor.execute(()->{
-            mUserDAO.insert(user);
-        });
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
+    public long insert(User user) {
+        return mUserDAO.insert(user);
     }
 
-    public void update(User user){
-        databaseExecutor.execute(()->{
+    public void update(User user) {
+        databaseExecutor.execute(() -> {
             mUserDAO.update(user);
         });
-        try{
+        try {
             Thread.sleep(1000);
-        }catch(InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public void delete(User user){
-        databaseExecutor.execute(()->{
+    public void delete(User user) {
+        databaseExecutor.execute(() -> {
             mUserDAO.delete(user);
         });
-        try{
+        try {
             Thread.sleep(1000);
-        }catch(InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
+
+    public LiveData<List<Course>> getTermCourses(int termID, int userId) {
+        return mCourseDAO.getTermCourses(termID, userId);
+    }
+
+    public LiveData<List<Assessment>> getAssessmentsForCourse(int courseId, int userId) {
+        return mAssessmentDAO.getAssessmentsForCourse(courseId, userId);
+    }
+
+    public LiveData<List<CourseR>> getUserCoursesWithTerm(int userId) {
+        return mCourseDAO.getUserCoursesWithTerm(userId);
+    }
+
+    public LiveData<List<AssessmentR>> getUserAssessmentsWithCourse(int userId) {
+        return mAssessmentDAO.getUserAssessmentsWithCourse(userId);
+    }
+
+    public LiveData<List<InstructorR>> getUserInstructorsWithCourse(int userId) {
+        return mInstructorDAO.getUserInstructorsWithCourse(userId);
+    }
 }

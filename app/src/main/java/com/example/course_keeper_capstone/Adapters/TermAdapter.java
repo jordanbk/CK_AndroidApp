@@ -18,9 +18,9 @@ import com.example.course_keeper_capstone.Entity.Term;
 import com.example.course_keeper_capstone.R;
 import com.example.course_keeper_capstone.UI.Terms.TermDetailActivity;
 
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,7 +65,6 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
                     }
                 }
             }
-
             FilterResults results = new FilterResults();
             results.values = filteredTermsList;
             results.count = filteredTermsList.size();
@@ -96,14 +95,8 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
                     int position = getAdapterPosition();
                     final Term currentTerm = userTerms.get(position);
                     Intent intent = new Intent(context, TermDetailActivity.class);
-                  /*  intent.putExtra(TERM_ID_KEY, currentTerm.getTermID());
-                    intent.putExtra("name", currentTerm.getTermName());
-                    intent.putExtra("start", currentTerm.getTermStart());
-                    intent.putExtra("end", currentTerm.getTermEnd());
-                    intent.putExtra("position", position);*/
                     intent.putExtra(TermDetailActivity.EXTRA_TERMS,currentTerm);
                     context.startActivity(intent);
-
                 }
             });
         }
@@ -113,17 +106,17 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TermAdapter.TermViewHolder holder, int position) {
-            Term currentTerm = userTerms.get(position);
-            holder.tvTitle.setText(currentTerm.getTermName());
-            String startEnd = currentTerm.getTermStart() + " to " + currentTerm.getTermEnd();
-            holder.tvDates.setText(startEnd);
+        Term currentTerm = userTerms.get(position);
+        holder.tvTitle.setText(currentTerm.getTermName());
+        String startEnd = currentTerm.getTermStart() + " to " + currentTerm.getTermEnd();
+        holder.tvDates.setText(startEnd);
 
     }
 
-   public void setUserTerms(List<Term> terms){
+    public void setUserTerms(List<Term> terms){
         userTerms.clear();
         userTerms.addAll(terms);
-       this.list.addAll(terms);
+        this.list.addAll(terms);
         notifyDataSetChanged();
     }
 

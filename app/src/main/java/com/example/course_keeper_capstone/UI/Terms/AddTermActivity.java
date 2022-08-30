@@ -22,42 +22,53 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import static com.example.course_keeper_capstone.Util.Util.checkDate;
+import static com.example.course_keeper_capstone.Util.Util.setDate;
+
+import android.app.DatePickerDialog;
+import android.os.Bundle;
+import android.util.Pair;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.course_keeper_capstone.Entity.Term;
+import com.example.course_keeper_capstone.R;
+import com.example.course_keeper_capstone.Util.Constants;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class AddTermActivity extends AppCompatActivity {
     private EditText termNameEdt, termStartEdt, termEndEdt;
     private Button addTermBtn;
-    Term term = new Term();
     Calendar termStartCal = Calendar.getInstance();
     Calendar termEndCal = Calendar.getInstance();
-
     DatePickerDialog.OnDateSetListener termStartDate;
     DatePickerDialog.OnDateSetListener termEndDate;
-    String dateFormat = "MM/dd/yyyy";
+    private AddTermViewModel addTermViewModel;
+    private int userID;
 
-    private TermViewModel termViewModel;
 
-    int userID;
-    private Repository repo;
-
-    int termId;
-    String termName;
-    String termStart;
-    String termEnd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_term);
-
-        repo = new Repository(getApplication());
-
         userID = getIntent().getIntExtra("id", -1);
 
         termNameEdt = findViewById(R.id.term_name_edit);
         termStartEdt = findViewById(R.id.term_start_edit);
         termEndEdt = findViewById(R.id.term_end_edit);
-
         addTermBtn = findViewById(R.id.save_term);
 
-        termViewModel = new ViewModelProvider(this).get(TermViewModel.class);
+        addTermViewModel = new ViewModelProvider(this).get(AddTermViewModel.class);
 
         // initialize calendar object for start date
         termStartDate = new DatePickerDialog.OnDateSetListener() {
@@ -66,19 +77,9 @@ public class AddTermActivity extends AppCompatActivity {
                 termStartCal.set(Calendar.YEAR, year);
                 termStartCal.set(Calendar.MONTH, month);
                 termStartCal.set(Calendar.DAY_OF_MONTH, day);
-                String dateFormat = "MM/dd/yyyy";
-                SimpleDateFormat format = new SimpleDateFormat(dateFormat, Locale.US);
-
-                showStartDate();
+                SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.US);
+                termStartEdt.setText(format.format(termStartCal.getTime()));
             }
-
-            private void showStartDate() {
-                String dateFormat = "MM/dd/yyyy";
-                SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
-
-                termStartEdt.setText(sdf.format(termStartCal.getTime()));
-            }
-
         };
 
         // initialize calendar object for end date
@@ -88,36 +89,24 @@ public class AddTermActivity extends AppCompatActivity {
                 termEndCal.set(Calendar.YEAR, year);
                 termEndCal.set(Calendar.MONTH, month);
                 termEndCal.set(Calendar.DAY_OF_MONTH, day);
-                String dateFormat = "MM/dd/yyyy";
-                SimpleDateFormat format = new SimpleDateFormat(dateFormat, Locale.US);
-
-                showEndDate();
-            }
-
-            private void showEndDate() {
-                String dateFormat = "MM/dd/yyyy";
-                SimpleDateFormat format = new SimpleDateFormat(dateFormat, Locale.US);
-
+                SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.US);
                 termEndEdt.setText(format.format(termEndCal.getTime()));
             }
-
         };
 
         termStartEdt.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
+                setDate(termStartCal,termStartEdt.getText().toString());
                 new DatePickerDialog(AddTermActivity.this, termStartDate, termStartCal
                         .get(Calendar.YEAR), termStartCal.get(Calendar.MONTH),
                         termStartCal.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
         termEndEdt.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
+                setDate(termEndCal,termEndEdt.getText().toString());
                 new DatePickerDialog(AddTermActivity.this, termEndDate, termEndCal
                         .get(Calendar.YEAR), termEndCal.get(Calendar.MONTH),
                         termEndCal.get(Calendar.DAY_OF_MONTH)).show();
@@ -127,48 +116,31 @@ public class AddTermActivity extends AppCompatActivity {
         addTermBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Term term;
                 if (!checkDate(termStartEdt.getText().toString(), termEndEdt.getText().toString()) || termNameEdt.getText().toString().trim().isEmpty() ||
                         termStartEdt.getText().toString().trim().isEmpty() || termEndEdt.getText().toString().isEmpty()) {
                     Toast.makeText(AddTermActivity.this, "Please make sure all fields are filled out", Toast.LENGTH_LONG).show();
                     return;
+                } else {
+                    addTermViewModel.saveUserTerm(new Term(termNameEdt.getText().toString(), termStartEdt.getText().toString(),
+                            termEndEdt.getText().toString(), userID));
                 }
-                else {
-/*                    term = new Term(++termId, termNameEdt.getText().toString(), termStartEdt.getText().toString(),
-                            termEndEdt.getText().toString(), userID);*/
-                    termViewModel.saveUserTerm(termNameEdt.getText().toString(), termStartEdt.getText().toString(),
-                            termEndEdt.getText().toString(), userID);
-                }
+            }
+        });
 
-                Intent intent = new Intent(AddTermActivity.this, TermActivity.class);
-                intent.putExtra("id", userID);
-                startActivity(intent);
+        addTermViewModel.isSaveSuccessLD.observe(this, new Observer<Pair<Boolean, String>>() {
+            @Override
+            public void onChanged(Pair<Boolean, String> isSaveSuccess) {
+                if (isSaveSuccess != null) {
+                    if (isSaveSuccess.first) {
+                        Toast.makeText(AddTermActivity.this, isSaveSuccess.second, Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(AddTermActivity.this, isSaveSuccess.second, Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
 
     }
-    // validate Dates
-    public static boolean checkDate(String startDate, String endDate){
-        try
-        {
-            String dateFormat= "MM/dd/yyyy";
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-            Date endD = sdf.parse(endDate);
-            Date startD = sdf.parse(startDate);
-            assert endD != null;
-            return endD.after(startD);
-        }
-        catch (Exception e){
-            return false;
 
-        }
-    }
-
-/*    public void saveAndGoBack(){
-        String name = termNameEdt.getText().toString();
-        String startDate = termStartEdt.getText().toString();
-        String endDate = termEndEdt.getText().toString();
-        editViewModel.saveTerm(name, startDate, endDate);
-        finish();
-    }*/
 }

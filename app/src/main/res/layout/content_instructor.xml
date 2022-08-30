@@ -16,7 +16,6 @@
         android:focusableInTouchMode="true"
         android:paddingTop="80dp"
         android:scrollbars="vertical"
-        android:onClick="editInstructor"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

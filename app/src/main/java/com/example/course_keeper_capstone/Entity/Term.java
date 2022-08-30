@@ -3,8 +3,10 @@ package com.example.course_keeper_capstone.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -30,19 +32,20 @@ public class Term implements Parcelable {
         this.userID = userID;
     }
 
+    @Ignore
     public Term(String termName, String termStart, String termEnd, int userID) {
         this.termName = termName;
         this.termStart = termStart;
         this.termEnd = termEnd;
         this.userID = userID;
     }
-
+    @Ignore
     public Term(String termName, String termStart, String termEnd) {
         this.termName = termName;
         this.termStart = termStart;
         this.termEnd = termEnd;
     }
-
+    @Ignore
     public Term() {
     }
 
@@ -110,7 +113,7 @@ public class Term implements Parcelable {
 
     @Override
     public String toString() {
-        return "Term{" +
+        return "TermR{" +
                 "termID=" + termID +
                 ", termName='" + termName + '\'' +
                 ", termStart='" + termStart + '\'' +
@@ -131,5 +134,10 @@ public class Term implements Parcelable {
         parcel.writeString(termStart);
         parcel.writeString(termEnd);
         parcel.writeInt(userID);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return super.equals(obj);
     }
 }

@@ -15,19 +15,19 @@ import java.util.List;
 public interface TermDAO {
 
     @Insert
-    void insert(Term term);
+    long insert(Term term);
 
     @Update
-    void update(Term term);
+    int update(Term term);
 
     @Delete
-    void delete(Term term);
+    int delete(Term term);
 
     @Query("SELECT * FROM terms ORDER BY termID ASC")
     LiveData<List<Term>> getAllTerms();
 
     //@Ignore
-    @Query("SELECT * FROM terms JOIN users ON terms.userID = users.Id WHERE terms.userID = users.id AND users.id IN (:userID)")
+    @Query("SELECT * FROM terms where userID =:userID")
     LiveData<List<Term>> getUserTerms(int userID);
 
     @Query("SELECT * FROM terms WHERE terms.termName LIKE :searchQuery")

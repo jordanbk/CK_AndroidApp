@@ -42,7 +42,7 @@ public class User {
         this.password = password;
     }
 
-
+    @Ignore
     public User(){}
 
     public int getId() {

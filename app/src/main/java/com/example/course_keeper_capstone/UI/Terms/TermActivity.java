@@ -15,12 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
-
-import com.example.course_keeper_capstone.Database.Repository;
 import com.example.course_keeper_capstone.Entity.Term;
 import com.example.course_keeper_capstone.R;
 import com.example.course_keeper_capstone.Adapters.TermAdapter;
-import com.example.course_keeper_capstone.UI.Base.HomeActivity;
+import com.example.course_keeper_capstone.UI.Base.BaseActivity;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,19 +27,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TermActivity extends AppCompatActivity {
+public class TermActivity extends BaseActivity {
     @BindView(R.id.recycler_view_terms)
     RecyclerView recyclerViewTerms;
-    private static final String TAG = "TermActivity";
-    private Repository repository;
     int userID;
-    int termID;
-    Term term;
     Context context;
     private List<Term> userTerms = new ArrayList<>();
     private TermAdapter termsAdapter;
     private Toolbar toolbar;
     TermViewModel mTermViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,19 +45,14 @@ public class TermActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
-        repository = new Repository(getApplication());
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view_terms);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         context = TermActivity.this;
-         termsAdapter = new TermAdapter(userTerms,context);
-        //recyclerView.setHasFixedSize(true);
-        //TermAdapter adapter =  new TermAdapter();
+        termsAdapter = new TermAdapter(userTerms, context);
         recyclerView.setAdapter(termsAdapter);
 
-        TermViewModel mTermViewModel = new ViewModelProvider(this).get(TermViewModel.class);
-        //mTermViewModel.getmTermsByUserId(userID);
-
+        mTermViewModel = new ViewModelProvider(this).get(TermViewModel.class);
 
         mTermViewModel.getmTermsByUserId(userID).observe(this, new Observer<List<Term>>() {
             @Override
@@ -73,37 +64,20 @@ public class TermActivity extends AppCompatActivity {
 
         toolbar.setTitle("Terms");
         // Inflate a menu to be displayed in the toolbar
-        toolbar.inflateMenu(R.menu.term_activity_toolbar);
+        toolbar.inflateMenu(R.menu.navigation_menu);
         // Set an OnMenuItemClickListener to handle menu item clicks
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_home_term:
-                        Intent intent2 = new Intent(TermActivity.this, HomeActivity.class);
-                        startActivity(intent2);
-                        return true;
-                    default:
-                        //default intent
-                        return false;
-                }
+                return TermActivity.super.onMenuItemClick(item);
             }
         });
     }
 
 
     /**
-     *  OnClick listener for Edit Term button
-     * @param view
-     */
-    public void editTerm(View view) {
-        Intent intent = new Intent(TermActivity.this, TermDetailActivity.class);
-        intent.putExtra("termID", termID);
-        startActivity(intent);
-    }
-
-    /**
-     *  OnClick listener for Add Term button
+     * OnClick listener for Add TermR button
+     *
      * @param view
      */
     public void add_term(View view) {
@@ -113,7 +87,7 @@ public class TermActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_item, menu);
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) menuItem.getActionView();
@@ -133,4 +107,5 @@ public class TermActivity extends AppCompatActivity {
         });
         return super.onCreateOptionsMenu(menu);
     }
+
 }

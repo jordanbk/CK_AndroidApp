@@ -8,4 +8,23 @@
         android:icon="@drawable/ic_baseline_search_24"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always"/>
+    <item
+        android:title="Home"
+        android:id="@+id/action_home"
+        android:visible="true"/>
+    <item
+        android:id="@+id/nav_terms"
+        android:title="Terms" />
+    <item
+        android:id="@+id/nav_courses"
+        android:title="Courses" />
+    <item
+        android:id="@+id/nav_assessments"
+        android:title="Assessments" />
+    <item
+        android:id="@+id/nav_instructors"
+        android:title="Instructors" />
+    <item
+        android:id="@+id/nav_logout"
+        android:title="@string/logout" />
 </menu>

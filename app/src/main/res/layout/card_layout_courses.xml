@@ -1,34 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/card_view_course"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="5dp">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:orientation="vertical"
+    app:cardCornerRadius="8dp"
+    app:contentPadding="5dp"
+    card_view:cardElevation="8dp"
+    card_view:cardMaxElevation="1dp">
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/card_view_terms">
+        android:layout_toEndOf="@+id/card_course_fab"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/card_course_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toEndOf="@+id/card_term_fab">
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="TITLE"
+            android:fontFamily="@font/poppins"
+            android:textSize="30sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/card_term_title"
-                android:text="TITLE"
-                android:textSize="30sp" />
+        <TextView
+            android:id="@+id/card_course_dates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:fontFamily="@font/poppins"
+            android:text="DATES" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DATES"
-                android:id="@+id/card_term_dates" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/course_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:fontFamily="@font/poppins"
+            android:text="STATUS" />
+        <TextView
+            android:id="@+id/course_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:fontFamily="@font/poppins"
+            android:text="Notes" />
 
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

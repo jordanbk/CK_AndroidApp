@@ -19,18 +19,22 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.course_keeper_capstone.Database.Repository;
 import com.example.course_keeper_capstone.Entity.User;
 import com.example.course_keeper_capstone.R;
+import com.example.course_keeper_capstone.UI.Assessments.AssessmentActivity;
+import com.example.course_keeper_capstone.UI.Courses.CourseActivity;
+import com.example.course_keeper_capstone.UI.Instructors.InstructorActivity;
 import com.example.course_keeper_capstone.UI.Terms.TermActivity;
+import com.example.course_keeper_capstone.UI.reports.ReportActivity;
+import com.example.course_keeper_capstone.Util.Util;
 import com.google.android.material.navigation.NavigationView;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-/*    @BindView(R.id.menu_username)
-    TextView tvUser;*/
+public class HomeActivity extends AppCompatActivity {
+    /*    @BindView(R.id.menu_username)
+        TextView tvUser;*/
     public static String usernameText;
     private User user;
     public DrawerLayout drawer;
     public ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar = null;
-    Repository repo;
     int userID;
     protected FrameLayout frameLayout;
     User currentUser;
@@ -40,29 +44,34 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         userID = getIntent().getIntExtra("id", -1);
-        repo = new Repository(getApplication());
 
-
-        // Inflate a menu to be displayed in the toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // drawer layout instance to toggle the menu icon to open
-        // drawer and back button to close drawer
-/*        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,
-                drawer,
-                toolbar,
-                R.string.nav_open,
-                R.string.nav_close);
-        // pass the Open and Close toggle for the drawer layout listener
-        // to toggle the button
-        drawer.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-        navigationView.setItemIconTintList(null);
-        navigationView.setNavigationItemSelectedListener(this);*/
 
+        toolbar.setTitle("Terms");
+        // Inflate a menu to be displayed in the toolbar
+        toolbar.inflateMenu(R.menu.menu_logout);
+        // Set an OnMenuItemClickListener to handle menu item clicks
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case R.id.action_report:
+                        startActivity(new Intent(HomeActivity.this, ReportActivity.class));
+                        return true;
+                    case R.id.action_logout:
+                        Util.LoginPrefs.setLoggedOut(HomeActivity.this);
+                        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                        return true;
+                    default:
+                        //default intent
+                        return false;
+                }
+            }
+        });
 
         // to make the Navigation drawer icon always appear on the action bar
         ImageButton termsButton = (ImageButton) findViewById(R.id.button_terms);
@@ -75,49 +84,39 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        ImageButton coursesButton = (ImageButton) findViewById(R.id.button_courses);
+        coursesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentTerms = new Intent(HomeActivity.this, CourseActivity.class);
+                intentTerms.putExtra("id", userID);
+                startActivity(intentTerms);
+            }
+        });
+
+
+        findViewById(R.id.button_assessments).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentTerms = new Intent(HomeActivity.this, AssessmentActivity.class);
+                intentTerms.putExtra("id", userID);
+                startActivity(intentTerms);
+            }
+        });
+
+        findViewById(R.id.button_instructors).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentTerms = new Intent(HomeActivity.this, InstructorActivity.class);
+                intentTerms.putExtra("id", userID);
+                startActivity(intentTerms);
+            }
+        });
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        if(id == R.id.nav_home){
-            Intent home = new Intent(HomeActivity.this, HomeActivity.class);
-            startActivity(home);
-        } else if (id == R.id.nav_terms){
-            Intent terms = new Intent(HomeActivity.this, TermActivity.class);
-            startActivity(terms);
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    @Override
-    public void onBackPressed(){
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)){
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.main, menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_logout, menu);
         return true;
     }
 

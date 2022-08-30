@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="assessment"
+            type="com.example.course_keeper_capstone.UI.reports.models.AssessmentR" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:constraint_referenced_ids="titleTv,startDateTv,endDateTv,courseTv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guidelineBegin"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd01"
+            />
+
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Dummy Name Dummy  Name"
+            android:gravity="center"
+            android:text="@{assessment.assessmentTitle}"
+            app:layout_constraintEnd_toStartOf="@+id/lineStart"
+            app:layout_constraintStart_toEndOf="@+id/lineBegin"
+            app:layout_constraintBottom_toBottomOf="@id/barrier"
+             app:layout_constraintTop_toBottomOf="@id/lineTop" />
+
+        <TextView
+            android:id="@+id/startDateTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="@string/start_date"
+            android:text="@{assessment.assessmentStartDate}"
+            app:layout_constraintEnd_toStartOf="@+id/lineEnd"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/barrier"
+            app:layout_constraintStart_toEndOf="@+id/lineStart"
+             app:layout_constraintTop_toBottomOf="@id/lineTop" />
+
+        <TextView
+            android:id="@+id/endDateTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="@string/end_date"
+            android:text="@{assessment.assessmentEndDate}"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@+id/guidelineMiddle"
+             app:layout_constraintTop_toBottomOf="@id/lineTop"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/barrier"
+            />
+
+        <TextView
+            android:id="@+id/courseTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Dummy Course Dumy Dourse Dummy Dours"
+            android:gravity="center"
+            android:text="@{assessment.courseTitle}"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEnd01"
+            app:layout_constraintStart_toStartOf="@+id/guidelineEnd"
+             app:layout_constraintTop_toBottomOf="@id/lineTop"
+            app:layout_constraintBottom_toBottomOf="@id/barrier"/>
+
+        <View
+            android:id="@+id/lineBegin"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/black"
+            app:layout_constraintStart_toStartOf="@id/guidelineBegin"
+            app:layout_constraintEnd_toEndOf="@id/guidelineBegin"
+             app:layout_constraintTop_toBottomOf="@id/lineTop"
+            app:layout_constraintBottom_toBottomOf="@id/barrier" />
+
+        <View
+            android:id="@+id/lineStart"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/black"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineStart"
+             app:layout_constraintTop_toBottomOf="@id/lineTop"
+            app:layout_constraintBottom_toBottomOf="@id/barrier" />
+
+        <View
+            android:id="@+id/lineEnd"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/black"
+            app:layout_constraintStart_toStartOf="@id/guidelineMiddle"
+            app:layout_constraintEnd_toEndOf="@id/guidelineMiddle"
+             app:layout_constraintTop_toBottomOf="@id/lineTop"
+            app:layout_constraintBottom_toBottomOf="@id/barrier" />
+
+        <View
+            android:id="@+id/lineFinish"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/black"
+            app:layout_constraintStart_toStartOf="@id/guidelineEnd"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+             app:layout_constraintTop_toBottomOf="@id/lineTop"
+            app:layout_constraintBottom_toBottomOf="@id/barrier" />
+
+        <View
+            android:id="@+id/lineFinish01"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/black"
+            app:layout_constraintStart_toStartOf="@id/guidelineEnd01"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd01"
+             app:layout_constraintTop_toBottomOf="@id/lineTop"
+            app:layout_constraintBottom_toBottomOf="@id/barrier" />
+
+        <View
+            android:id="@+id/lineTop"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd01"
+            app:layout_constraintStart_toStartOf="@id/guidelineBegin"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/lineBottom"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd01"
+            app:layout_constraintStart_toStartOf="@id/guidelineBegin"
+            app:layout_constraintBottom_toTopOf="@id/barrier" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineBegin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.01" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineMiddle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.50" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.75" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.99" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

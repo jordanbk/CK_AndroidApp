@@ -18,4 +18,24 @@
     <string name="add_instructor">Add Instructor</string>
     <string name="add_course">Add Course</string>
     <string name="add_assessment">Add Assessment</string>
+    <string name="update_assessment">Update Assessment</string>
+    <string name="assessment_end">Assessment End</string>
+    <string name="assessment_start">Assessment Start</string>
+    <string name="assessment_title">Assessment Title</string>
+    <string name="assessment_detail">Assessment Detail</string>
+    <string name="update_course">Update Course</string>
+    <string name="related_assessments">Related Assessments</string>
+    <string name="title">Title</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="name">Name</string>
+    <string name="course">Course</string>
+    <string name="updateTermBtn">Update Term</string>
+    <string name="instructor_details">Instructor Details</string>
+    <string name="update_instructor">Update Instructor</string>
+    <string name="instructor_phone">Phone</string>
+    <string name="instructor_email">Email</string>
+    <string name="instructor_name">Name</string>
+    <string name="report">Report</string>
+    <string name="action_settings">Generate Report</string>
 </resources>

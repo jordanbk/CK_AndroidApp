@@ -56,20 +56,19 @@ public class EditViewModel extends AndroidViewModel {
         mRepository.insert(term);
     }
 
-    public void saveCourse(String courseTitle, String courseStart, String courseEnd, String courseStatus, int termID_FK, String courseNotes) {
+    public void saveCourse(String courseTitle,String courseStatus, String courseStart, String courseEnd, String courseNotes) {
         Course course = mLiveCourse.getValue();
 
         if(course == null) {
             if (TextUtils.isEmpty(courseTitle.trim())) {
                 return;
             }
-            course = new Course(courseTitle.trim(), courseStart, courseEnd, courseStatus, termID_FK);
+            course = new Course(courseTitle.trim(), courseStatus, courseStart, courseEnd, courseNotes);
         } else {
             course.setCourseTitle(courseTitle.trim());
+            course.setCourseStatus(courseStatus);
             course.setCourseStart(courseStart);
             course.setCourseEnd(courseEnd);
-            course.setCourseStatus(courseStatus);
-            course.setTermID_FK(termID_FK);
             course.setCourseNotes(courseNotes);
         }
         mRepository.insert(course);

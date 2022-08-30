@@ -1,49 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".UI.Terms.AddTermActivity"
     tools:showIn="@layout/activity_add_term">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/term_name_til"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/term_name_edit"
             android:layout_margin="@dimen/text_margin"
-            android:hint="@string/term_name_add_term"
-            android:inputType="textCapWords"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/term_start_edit"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/term_name_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/term_name_add_term"
+                android:inputType="textCapWords" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/term_start_til"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
             android:layout_marginTop="16dp"
-            android:hint="@string/term_start_add_term"
-            android:inputType="date"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/term_name_edit" />
+            app:layout_constraintTop_toBottomOf="@+id/term_name_til">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/term_start_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:hint="@string/term_start_add_term"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/term_end_til"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/term_end_edit"
-            android:hint="@string/term_end_add_term"
             android:layout_margin="@dimen/text_margin"
-            app:layout_constraintTop_toBottomOf="@+id/term_start_edit"
             app:layout_constraintStart_toStartOf="parent"
-            android:inputType="date" />
+            app:layout_constraintTop_toBottomOf="@+id/term_start_til">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/term_end_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:hint="@string/term_end_add_term"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/save_term"
@@ -53,7 +73,7 @@
             android:text="@string/save_term_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/term_end_edit" />
+            app:layout_constraintTop_toBottomOf="@+id/term_end_til" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
